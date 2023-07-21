@@ -12,22 +12,24 @@
 </p>
 
 
+## 更多  
 
-## 使用步骤  
-待编写
+[IOS手机端获取cookie的方法可参考](./docs/ios-cn.md)
+
+[Bark每日定时推送消息](./docs/bark-cn.md)
 
 ## 签到列表
 
 🟢: 正常运行 🔴: 暂不可用 🟡: 待测试 🟤: 随缘
 
-| 状态 | 类别 | 终端 | 任务名称 | 名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 🟢️ | 签到 | WEB | 阿里云盘(极简版) | https://www.aliyundrive.com | aliyundrive_light.js | 2023-07-21 | 否 | 是 | 签到 |
-| 🟢️ | 签到 | WEB | 阿里云盘(多用户版)  | https://www.aliyundrive.com | aliyundrive_multiuser.js | 2023-07-21 | 是 | 是 | 签到 |
-| 🟢️ | 签到 | WEB | 百度贴吧 | https://tieba.baidu.com | tieba.js | 2023-07-21 | 是 | 是 | 签到 |
-| 🟢️ | 签到 | WEB | 吾爱论坛 | https://www.52pojie.cn | 52pojie.js | 2023-07-20 | 是 | 是 | 签到 |
-| 🟢️ | 签到 | WEB | 有道云笔记 | https://note.youdao.com/ |noteyoudao.js | 2023-07-21 | 是 | 是 | 签到、领取空间 |
-| 🟢️ | 签到 | 移动端 | WPS(轻量版) | https://vip.wps.cn/ |wps_light.js | 2023-07-21 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |
+| 状态 | 类别 | 终端 | 任务名称 | 名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |使用步骤 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 🟢️ | 签到 | WEB | 阿里云盘(极简版) | https://www.aliyundrive.com | aliyundrive_light.js | 2023-07-21 | 否 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | 阿里云盘(多用户版)  | https://www.aliyundrive.com | aliyundrive_multiuser.js | 2023-07-21 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | 百度贴吧 | https://tieba.baidu.com | tieba.js | 2023-07-21 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | 吾爱论坛 | https://www.52pojie.cn | 52pojie.js | 2023-07-20 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | 有道云笔记 | https://note.youdao.com/ |noteyoudao.js | 2023-07-21 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
+| 🟢️ | 签到 | 移动端 | WPS(轻量版) | https://vip.wps.cn/ |wps_light.js | 2023-07-21 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 | |
 
 
 ## 支持的通知列表
@@ -54,8 +56,8 @@
 > ***您使用或者复制了本仓库且本人制作的任何脚本，则视为 `已接受` 此声明，请仔细阅读***
 
 ## 代码参考
-<a href="https://github.com/HeiDaotu/WFRobertQL">WFRobertQL</a></br>
-<a href="https://github.com/kxs2018/daily_sign">daily_sign</a></br>
+<a href="https://github.com/HeiDaotu/WFRobertQL">WFRobertQL</a>
+<a href="https://github.com/kxs2018/daily_sign">daily_sign</a>
 
 ## README模板来源于
 <a href="https://github.com/Sitoi/dailycheckin">dailycheckin仓库</a>
