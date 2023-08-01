@@ -12,6 +12,30 @@
 </p>
 
 
+## 聚合脚本（polymerization）
+
+文件夹“polymerization”为聚合脚本，运行UPDATE.js即可自动生成表格及配置内容。
+
+### 聚合脚本优势
+
+* 所有脚本及配置表格汇集在一个文档中，利于统一管理和配置
+* 方便后续更新脚本，仅需运行UPDATE脚本即可自动新增最新表格及配置，不再需要手动新建表格框架
+* 方便定时任务的添加与查看
+* 支持仅推送错误消息、推送昵称等，支持更多的推送方式
+* 配置灵活快捷，利于新增脚本及新配置功能
+* 支持多脚本共用同一个表格，如WPS(轻量版)、WPS(客户端版)、WPS(稻壳版)脚本共用名称为wps的表格。
+
+## 非聚合脚本（独立脚本、single）
+
+文件夹“single”为独立脚本，需要手动创建表格。一个文档内只有一个脚本。
+
+### 非聚合脚本表格内容参考
+
+| cookie(默认20个) | 是否执行(是/否) | 账号名称(可不填写) | bark   | 是否推送(是/否) | pushplus | 是否推送(是/否) | ServerChan | 是否推送(是/否) |
+| ---------------- | --------------- | ------------------ | ------ | --------------- | -------- | --------------- | ---------- | --------------- |
+| xxxxxxxx1        | 是              | 昵称1              | xxxxxx | 否              | xxxxxx   | 否              | xxxxxx     | 否              |
+| xxxxxxxx2        | 否              | 昵称2              |        |                 |          |                 |            |                 |
+
 ## 更多  
 
 [IOS手机端获取cookie的方法可参考](./docs/ios-cn.md)
@@ -24,18 +48,30 @@
 
 | 状态 | 类别 | 终端 | 任务名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |使用步骤 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2023-07-21 | 否 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2023-07-21 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2023-07-21 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2023-07-20 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2023-07-21 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
-| 🟢️ | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2023-07-21 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 | |
-
+| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2023-08-01 | 否 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
+| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
+| 🟤 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2023-08-01 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
+| 🟢️ | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2023-08-01 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
+| 🟢️ | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2023-08-01 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
+| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2023-08-01 | 是 | 是 | 适用于稻壳签到，自动领取每日PPT | 待编写 |
+| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2023-08-01 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2023-08-01 | 是 | 是 | 抽奖 | 待编写 |
 
 ## 支持的通知列表
 
 - Bark（iOS）
 - 邮箱推送（内置/自定义）
+- Server酱
+- pushplus
+- 钉钉
+
+## 建议  
+
+* 不同wps版本签到间隔30分钟  
+* 定时任务时间尽量上午九点半之后  
+* 定时任务尽量不设在同一时间  
 
 ## 特别声明
 
@@ -58,6 +94,8 @@
 ## 代码参考
 <a href="https://github.com/HeiDaotu/WFRobertQL">WFRobertQL</a>
 <a href="https://github.com/kxs2018/daily_sign">daily_sign</a>
+<a href="https://www.52pojie.cn/thread-1811357-1-1.html">@qike2391</a>
+<a href="https://github.com/wd210010/just_for_happy">wd210010</a>
 
 ## README模板来源于
 <a href="https://github.com/Sitoi/dailycheckin">dailycheckin仓库</a>
