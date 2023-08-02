@@ -12,7 +12,7 @@
 </p>
 
 
-## 聚合脚本（polymerization）
+## 聚合脚本（polymerization）[聚合脚本教程](./docs/polymerization-cn.md)
 
 文件夹“polymerization”为聚合脚本，运行UPDATE.js即可自动生成表格及配置内容。
 
