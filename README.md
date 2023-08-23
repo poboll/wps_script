@@ -10,9 +10,9 @@
     <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=popout-square" alt="GitHub forks"></a>
     <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=popout-square" alt="GitHub issues"></a>
 </p>
+## 前往[说明文档][脚本仓库](https://github.com/poboll/wps_script)
 
-
-## 聚合脚本（polymerization）[聚合脚本教程](./docs/polymerization-cn.md)
+## 聚合脚本（polymerization）[聚合脚本教程](./polymerization.md)
 
 文件夹“polymerization”为聚合脚本，运行UPDATE.js即可自动生成表格及配置内容。
 
@@ -48,16 +48,23 @@
 
 | 状态 | 类别 | 终端 | 任务名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |使用步骤 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2023-08-01 | 否 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
-| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
-| 🟤 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2023-08-01 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2023-08-01 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
-| 🟢️ | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2023-08-01 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
-| 🟢️ | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2023-08-01 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
-| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2023-08-01 | 是 | 是 | 适用于稻壳签到，自动领取每日PPT | 待编写 |
-| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2023-08-01 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2023-08-01 | 是 | 是 | 抽奖 | 待编写 |
+| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2023-08-23 | 否 | 是 | 签到，无推送功能 |待编写 |
+| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2023-08-23 | 是 | 是 | 签到、自动领取首个任务奖励 |待编写 |
+| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2023-08-23 | 是 | 是 | 签到、只能签6个左右 |待编写 |
+| 🟤 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2023-08-23 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2023-08-23 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
+| 🟤 | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2023-08-23 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
+| 🟤 | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2023-08-23 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
+| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2023-08-23 | 是 | 是 | 适用于稻壳签到，自动领取每日PPT | 待编写 |
+| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2023-08-23 | 是 | 是 | 抽奖 | 待编写 |
+| 🟢️ | 签到 | WEB | [在线工具](https://tool.lu/) | toolu.js | 2023-08-23 | 是 | 是 | 签到 | 签到获取积分 |
+| 🟡 | 签到 | 小程序 | 像素蛋糕 | cake.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
+| 🟡 | 签到 | 小程序 | 甜润世界 | tianrun.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚果园](https://ddxq.mobi) | ddmy_ddgy.js | 2023-08-23 | 是 | 是 | 领积分、签到、浇水 | 待编写 |
+| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚鱼塘](https://ddxq.mobi) | ddmy_ddyt.js | 2023-08-23 | 是 | 是 | 签到、喂饲料 | 待编写 |
+| 🟢️ | 签到 | APP | [时光相册](https://www.everphoto.cn/) | everphoto.js | 2023-08-23 | 是 | 是 | 签到、领空间 | 待编写 |
+| 🟢️ | 签到 | APP | [北京时间](https://www.btime.com) | btime.js | 2023-08-23 | 是 | 是 | 签到、领时间币 | 待编写 |
 
 ## 支持的通知列表
 
@@ -65,13 +72,182 @@
 - 邮箱推送（内置/自定义）
 - Server酱
 - pushplus
+- 邮箱
 - 钉钉
+- Discord
 
 ## 建议  
 
 * 不同wps版本签到间隔30分钟  
 * 定时任务时间尽量上午九点半之后  
 * 定时任务尽量不设在同一时间  
+
+## 致开发者
+
+代码进行了模块化的开发，即使是**零开发经验、无代码基础**也能根据以下教程快速编写出所需脚本。
+文件简要解释：UPDATE.js脚本（更新脚本）能够自动创建表格、自动填充缺失内容，不会覆盖原有数据
+除此脚本外，都是自动化脚本。
+
+### 新增脚本步骤：
+
+1. 向UPDATE.js脚本中写入新脚本的表格配置数据
+   如原来表格信息是这样
+
+```javascript
+// 分配置表名称
+var subConfigWorkbook=['aliyundrive_multiuser','52pojie'];
+// CONFIG表内容
+var configContent=[
+  ['工作表的名称','备注','只推送失败消息（是/否）','推送昵称（是/否）'],
+  ['aliyundrive_multiuser','阿里云盘（多用户版）','否','否'],
+  ['52pojie','吾爱破解','否','否'],
+]
+```
+
+假设需要添加有道云笔记的脚本（英文noteyoudao）,则修改为如下。
+
+```javascript
+// 分配置表名称
+var subConfigWorkbook=['aliyundrive_multiuser','52pojie','noteyoudao'];
+// CONFIG表内容
+var configContent=[
+  ['工作表的名称','备注','只推送失败消息（是/否）','推送昵称（是/否）'],
+  ['aliyundrive_multiuser','阿里云盘（多用户版）','否','否'],
+  ['52pojie','吾爱破解','否','否'],
+  ['noteyoudao','有道云笔记','否','否'],
+]
+```
+
+此时若运行UPDATE.js脚本，则会在CONFIG表（主配置表）中看到新增了一行有道云笔记的配置，并且新增了名称为noteyoudao的表
+
+1. 新建自动化脚本，名称需要和步骤1中新增的表名称一致。如上述的noteyoudao.js。可以直接复制已有的自动化脚本，在此基础上修改。
+   例如修改52pojie脚本为新增的noteyoudao脚本
+   在脚本开头的几行会有此脚本的基础信息，将其修改
+   原脚本为：
+
+```javascript
+let sheetNameSubConfig = "52pojie"; // 分配置表名称
+let pushHeader = "【52pojie】";
+```
+
+修改后脚本为：
+
+```javascript
+let sheetNameSubConfig = "noteyoudao"; // 这里需要和步骤1中的表名称一致
+let pushHeader = "【有道云笔记】";  // 这里的内容可以随意填写，仅作为消息推送的备注
+```
+
+然后修改处于脚本最末尾的execHandle函数，根据抓包的内容（例如抓取签到的包，软件抓包也不需要代码基础，IOS端可用Stream工具、安卓端可用小黄鸟、PC端可用burp）填写如下标注的几处修改的地方即可。 原脚本大致内容会为：
+
+```javascript
+// 具体的执行函数
+function execHandle(cookie, pos) {
+  let messageSuccess = "";
+  let messageFail = "";
+  let messageName = "";
+  if (messageNickname == 1) {
+    messageName = Application.Range("C" + pos).Text;
+  } else {
+    messageName = "单元格A" + pos + "";
+  }
+  try {
+    var url1 = "https://xxxxxx.com";    // 修改处①
+    data ={                             // 修改处②，若是get请求则忽略此处
+        "键":"值",
+    }
+    headers = {                         // 修改处③
+      cookie: cookie,
+      "键":"值",
+    };
+
+    let resp = HTTP.fetch(url1, {       // 可能修改处，若为post请求则用这块代码
+      method: "post",
+      headers: headers,
+      data: data,
+    });
+
+    // let resp = HTTP.fetch(url1, {    // 可能修改处，若为get请求则用这块代码
+    //   method: "get",
+    //   headers: headers,
+    // });
+
+    if (resp.status == 200) {           // 可能修改处，按需对json格式修改。若不会修改，则可以忽略此处
+      resp = resp.json();
+      console.log(resp);
+      messageSuccess += "帐号：" + messageName + "签到成功 " ;
+      console.log("帐号：" + messageName + "签到成功 ");
+    } else {
+      console.log(resp.text());
+      messageFail += "帐号：" + messageName + "签到失败 ";
+      console.log("帐号：" + messageName + "签到失败 ");
+    }
+  } catch {
+    messageFail += messageName + "失败";
+  }
+
+  sleep(2000);
+  if (messageOnlyError == 1) {
+    message += messageFail;
+  } else {
+    message += messageFail + " " + messageSuccess;
+  }
+  console.log(message);
+}
+```
+
+例如修改为noteyoudao的脚本后的内容为
+
+```javascript
+// 具体的执行函数
+function execHandle(cookie, pos) {
+  let messageSuccess = "";
+  let messageFail = "";
+  let messageName = "";
+  if (messageNickname == 1) {
+    messageName = Application.Range("C" + pos).Text;
+  } else {
+    messageName = "单元格A" + pos + "";
+  }
+  try {
+    var url1 = "https://note.youdao.com/yws/mapi/user?method=checkin";   // 修改了这里
+    headers = { // 修改了这里
+      cookie: cookie,   
+      "User-Agent": "YNote",
+      Host: "note.youdao.com",
+    };
+
+    let resp = HTTP.fetch(url1, {   // 修改了这里
+      method: "post",
+      headers: headers,
+    });
+
+    if (resp.status == 200) {   // 修改了这里
+      resp = resp.json();
+      console.log(resp);
+      total = resp["total"] / 1048576;
+      space = resp["space"] / 1048576;
+      messageSuccess += "帐号：" + messageName + "签到成功，本次获取 " + space + " M, 总共获取 " + total + " M ";
+      console.log("帐号：" + messageName + "签到成功，本次获取 " + space + " M, 总共获取 " + total + " M ");
+    } else {
+      console.log(resp.text());
+      messageFail += "帐号：" + messageName + "签到失败 ";
+      console.log("帐号：" + messageName + "签到失败 ");
+    }
+  } catch {
+    messageFail += messageName + "失败";
+  }
+
+  sleep(2000);
+  if (messageOnlyError == 1) {
+    message += messageFail;
+  } else {
+    message += messageFail + " " + messageSuccess;
+  }
+  console.log(message);
+}
+```
+
+此时就成功创建新脚本了。
 
 ## 特别声明
 
