@@ -10,7 +10,8 @@
     <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=popout-square" alt="GitHub forks"></a>
     <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=popout-square" alt="GitHub issues"></a>
 </p>
-## 前往[说明文档][脚本仓库](https://github.com/poboll/wps_script)
+
+## 前往 [说明文档wps-docs.caiths.com](https://wps-docs.caiths.com) [脚本仓库/wps_script](https://github.com/poboll/wps_script)
 
 ## 聚合脚本（polymerization）[聚合脚本教程](./polymerization.md)
 
@@ -25,9 +26,12 @@
 * 配置灵活快捷，利于新增脚本及新配置功能
 * 支持多脚本共用同一个表格，如WPS(轻量版)、WPS(客户端版)、WPS(稻壳版)脚本共用名称为wps的表格。
 
-## 非聚合脚本（独立脚本、single）
+## 调试脚本（DEBUG、仅用于测试脚本错误）
+文件夹“DEBUG”为适配聚合版脚本的调试脚本，如果运行聚合脚本出现问题，可复制此文件夹内的调试脚本并运行，可一定程度指出是何种错误。
 
-文件夹“single”为独立脚本，需要手动创建表格。一个文档内只有一个脚本。
+## 非聚合脚本（独立脚本、single，非聚合脚本目前已不再维护）
+
+文件夹“single”为独立脚本，需要手动创建表格。一个文档内只有一个脚本呢。
 
 ### 非聚合脚本表格内容参考
 
@@ -48,23 +52,27 @@
 
 | 状态 | 类别 | 终端 | 任务名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |使用步骤 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2023-08-23 | 否 | 是 | 签到，无推送功能 |待编写 |
-| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2023-08-23 | 是 | 是 | 签到、自动领取首个任务奖励 |待编写 |
-| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2023-08-23 | 是 | 是 | 签到、只能签6个左右 |待编写 |
-| 🟤 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2023-08-23 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2023-08-23 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
-| 🟤 | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2023-08-23 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
-| 🟤 | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2023-08-23 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
-| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2023-08-23 | 是 | 是 | 适用于稻壳签到，自动领取每日PPT | 待编写 |
-| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2023-08-23 | 是 | 是 | 抽奖 | 待编写 |
-| 🟢️ | 签到 | WEB | [在线工具](https://tool.lu/) | toolu.js | 2023-08-23 | 是 | 是 | 签到 | 签到获取积分 |
-| 🟡 | 签到 | 小程序 | 像素蛋糕 | cake.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
-| 🟡 | 签到 | 小程序 | 甜润世界 | tianrun.js | 2023-08-23 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚果园](https://ddxq.mobi) | ddmy_ddgy.js | 2023-08-23 | 是 | 是 | 领积分、签到、浇水 | 待编写 |
-| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚鱼塘](https://ddxq.mobi) | ddmy_ddyt.js | 2023-08-23 | 是 | 是 | 签到、喂饲料 | 待编写 |
-| 🟢️ | 签到 | APP | [时光相册](https://www.everphoto.cn/) | everphoto.js | 2023-08-23 | 是 | 是 | 签到、领空间 | 待编写 |
-| 🟢️ | 签到 | APP | [北京时间](https://www.btime.com) | btime.js | 2023-08-23 | 是 | 是 | 签到、领时间币 | 待编写 |
+| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2024-04-13 | 否 | 是 | 签到，无推送功能 |待编写 |
+| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2024-04-13 | 是 | 是 | 签到、自动领取首个任务奖励 |待编写 |
+| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2024-04-13 | 是 | 是 | 签到、只能签6个左右 |待编写 |
+| 🔴 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2024-04-13 | 是 | 是 | 签到 |待编写 |
+| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2024-04-13 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
+| 🟤 | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2024-04-13 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
+| 🔴 | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2024-04-13 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
+| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2024-04-13 | 是 | 是 | 适用于稻壳签到，自动领取和保存每日PPT | 待编写 |
+| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2024-04-13 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2024-04-13 | 是 | 是 | 抽奖 | 待编写 |
+| 🟢️ | 签到 | WEB | [在线工具](https://tool.lu/) | toolu.js | 2024-04-13 | 是 | 是 | 签到 | 签到获取积分 |
+| 🟡 | 签到 | 小程序 | 像素蛋糕 | cake.js | 2024-04-13 | 是 | 是 | 签到 | 待编写 |
+| 🟡 | 签到 | 小程序 | 甜润世界 | tianrun.js | 2024-04-13 | 是 | 是 | 签到 | 待编写 |
+| 🔴 | 多功能 | APP | [叮咚买菜-叮咚果园](https://ddxq.mobi) | ddmy_ddgy.js | 2024-04-13 | 是 | 是 | 领积分、签到、浇水 | 待编写 |
+| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚鱼塘](https://ddxq.mobi) | ddmy_ddyt.js | 2024-04-13 | 是 | 是 | 签到、喂饲料 | 待编写 |
+| 🟢️ | 签到 | APP | [时光相册](https://www.everphoto.cn/) | everphoto.js | 2024-04-13 | 是 | 是 | 签到、领空间 | 待编写 |
+| 🟢️ | 签到 | APP | [北京时间](https://www.btime.com) | btime.js | 2024-04-13 | 是 | 是 | 签到、领时间币 | 待编写 |
+| 🟢️ | 签到 | APP | [AcFun](https://www.acfun.cn) | acfun.js | 2024-04-13 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 签到 | APP | [喜马拉雅](https://www.ximalaya.com) | xmly.js | 2024-04-13 | 是 | 是 | 签到 | 待编写 |
+| 🟢️ | 签到 | WEB | [ios游戏迷](https://yuchen.tonghuaios.com) | xmly.js | 2024-04-13 | 是 | 是 | 签到得积分 | 待编写 |
+| 🟢️ | 签到 | APP | [希沃白板](http://id.seewo.com) | easinote.js | 2024-04-12 | 是 | 是 | 签到得积分 | 待编写 |
 
 ## 支持的通知列表
 
@@ -120,7 +128,7 @@ var configContent=[
 
 此时若运行UPDATE.js脚本，则会在CONFIG表（主配置表）中看到新增了一行有道云笔记的配置，并且新增了名称为noteyoudao的表
 
-1. 新建自动化脚本，名称需要和步骤1中新增的表名称一致。如上述的noteyoudao.js。可以直接复制已有的自动化脚本，在此基础上修改。
+2. 新建自动化脚本，名称需要和步骤1中新增的表名称一致。如上述的noteyoudao.js。可以直接复制已有的自动化脚本，在此基础上修改。
    例如修改52pojie脚本为新增的noteyoudao脚本
    在脚本开头的几行会有此脚本的基础信息，将其修改
    原脚本为：

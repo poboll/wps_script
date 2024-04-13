@@ -1,5 +1,6 @@
 // 叮咚买菜-叮咚果园自动签到
-// 20230820
+// 功能：每日签到、完成部分任务、浇水、施肥
+// 20231121
 
 let sheetNameSubConfig = "ddmc"; // 分配置表名称
 let sheetNameSubConfig2 = "ddmc_ddgy";
@@ -307,6 +308,8 @@ function execHandle(cookie, pos) {
       'https://farm.api.ddxq.mobi/api/v2/task/list?latitude=40.123389&longitude=116.345477&env=PE&station_id=&city_number=0201&api_version=9.44.0&app_client_id=3&native_version=10.15.0&h5_source=&page_type=2&gameId=1',  // 获取任务taskCode
       'https://farm.api.ddxq.mobi/api/v2/task/achieve?api_version=9.1.0&app_client_id=1&station_id=&stationId=&native_version=&CityId=0201&OSVersion=15&uid=&latitude=40.123389&longitude=116.345477&lat=40.123389&lng=116.345477&device_token=&taskCode=', // 完成任务
       'https://farm.api.ddxq.mobi/api/v2/task/reward?api_version=9.1.0&app_client_id=1&station_id=&stationId=&native_version=&app_version=10.15.1&OSVersion=15&CityId=0201&uid=&latitude=40.123389&longitude=116.345477&lat=40.123389&lng=116.345477&device_token=&userTaskLogId=',  // 领取任务奖励
+      'https://farm.api.ddxq.mobi/api/v2/task/list-orchard?api_version=9.1.0&app_client_id=1&station_id=&stationId=&native_version=&CityId=0201&OSVersion=15&uid=&latitude=40.123389&longitude=116.345477&lat=40.123389&lng=116.345477&device_token=&reward=FERTILIZER&cityCode=0201',// 查询施肥数量
+      'https://farm.api.ddxq.mobi/api/v2/props/props-use?api_version=9.1.0&app_client_id=1&station_id=&stationId=&native_version=&CityId=0201&OSVersion=15&uid=&latitude=40.123389&longitude=116.345477&lat=40.123389&lng=116.345477&device_token=&propsCode=FERTILIZER&propsId=' + propsId + '&seedId=' + seedId, // 施肥
     ];
     // 获取任务taskCode
     let taskCode = []
@@ -332,7 +335,7 @@ function execHandle(cookie, pos) {
         'ddmc-station-id': '',
         'ddmc-ip': '',
       },
-      {  // 签到、浇水、领取奖励、获取任务列表
+      {  // 签到、浇水、领取奖励、获取任务列表、查询肥料数量、施肥
         'Host': 'farm.api.ddxq.mobi',
         'Origin': 'https://orchard-m.ddxq.mobi',
         'Cookie': cookie,
@@ -541,6 +544,10 @@ function execHandle(cookie, pos) {
     let amount = 10; // 记录剩余水量
     let amoutCount = 0; // 浇水次数
     let flagAmount = 0;  // 浇水标志，1为浇水
+
+    let countSeedId = 0; // 计算是不是每次浇花的剩余水量都一样，如果三次都一样，则认为seedid过期
+    let lastamount = 0; // 记录上一次剩余水量
+
     while(amount >= 10){
       resp = HTTP.fetch(url[3], {
         method: "get",
@@ -554,6 +561,22 @@ function execHandle(cookie, pos) {
         msg = resp["msg"];
         if(code == 0){
           amount = resp["data"]["props"]["amount"];
+
+          // 用于判断seedId是否过期，也即浇水是否失败
+          if(lastamount == amount){ // 和上次剩余水量一样，可能没浇水成功
+            countSeedId += 1; // 记录相同次数
+          }else{
+            countSeedId = 0;  // 水量不同，浇水成功，置零
+          }
+          lastamount = amount; // 记录水量，以便下一次循环使用
+          if(countSeedId >=3){  // 浇了三次剩余水量都相同，则认为浇水失败，不再浇水，并提醒用户更换新的seedId值
+            msg = "[❗❗❗提醒]seedId值可能过期，请抓包获取最新的值"
+            messageFail += "[❗❗❗提醒]seedId值可能过期，请抓包获取最新的值"
+            console.log("提前退出浇水，错误消息为：" + msg)
+            amoutCount -= 3;  // 减去浇水失败的次数
+            break;  
+          }
+
           flagAmount = 1;
           amoutCount += 1;
           console.log("浇水中... ,剩余水量：" + amount)
@@ -578,6 +601,70 @@ function execHandle(cookie, pos) {
       messageFail += "浇水日志：" + msg + " ";
       console.log( "浇水日志：" + msg + " ");
     }
+
+    // 查询肥料数量
+    let fertilizer = 0; // 记录肥料数量
+    resp = HTTP.fetch(url[7], {
+      method: "get",
+      headers: headers[1],
+    });
+
+    if (resp.status == 200) {
+      console.log("查询当前肥料数量");
+      resp = resp.json();
+      console.log(resp);
+      code = resp["code"];
+      msg = resp["msg"];
+      if(code == 0){
+        fertilizer = resp["data"]["fertilizer"]["amount"];
+        console.log("当前肥料数量" + fertilizer + " ");
+      }else{
+        console.log("肥料数量查询失败 ");
+      }
+    } else {
+      console.log(resp.text());
+      console.log("肥料数量查询失败 ");
+    }
+    // 施肥
+    let fertilizerCount = 0; // 浇水次数
+    let flagFertilizer = 0;  // 施肥标志，1为浇水
+    while(fertilizer >= 10){
+      resp = HTTP.fetch(url[8], {
+        method: "get",
+        headers: headers[1],
+      });
+
+      if (resp.status == 200) {
+        resp = resp.json();
+        // console.log(resp);
+        code = resp["code"];
+        msg = resp["msg"];
+        if(code == 0){
+          fertilizer = resp["data"]["propsUse"]["amount"];
+          flagFertilizer = 1;
+          fertilizerCount += 1;
+          console.log("施肥中... ,剩余肥料：" + fertilizer)
+        }else{
+          console.log(resp);
+          console.log("提前退出施肥，错误消息为：" + msg)
+          fertilizer = 0; // 直接置肥料为0 退出施肥
+        }
+      } else {
+        console.log(resp.text());
+        console.log("提前退出施肥")
+        fertilizer = 0; // 直接置肥料为0 退出施肥
+      }
+      sleep(3000)
+    }
+
+    if(flagFertilizer ==  1){
+      messageSuccess += "成功施肥" +  fertilizerCount + "次 "
+      console.log("成功施肥" +  fertilizerCount + "次 ");
+    }
+    // else{
+    //   messageFail += "施肥日志：" + msg + " ";
+    //   console.log( "施肥日志：" + msg + " ");
+    // }
 
 
   } catch {

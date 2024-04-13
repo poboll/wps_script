@@ -1,9 +1,8 @@
-// WPS（轻量版、手机端签到）
-// 需配合“金山文档”中的表格内容
+// ios游戏迷自动签到
+// 20240208
 
-let sheetNameSubConfig = "wps"; // 分配置表名称
-let sheetNameSubConfig2 = "wps_light";
-let pushHeader = "【wps轻量版】";
+let sheetNameSubConfig = "tonghua"; // 分配置表名称
+let pushHeader = "【ios游戏迷】";
 let sheetNameConfig = "CONFIG"; // 总配置表
 let sheetNamePush = "PUSH"; // 推送表名称
 let sheetNameEmail = "EMAIL"; // 邮箱表
@@ -45,7 +44,7 @@ if (flagConfig == 1) {
       // 如果为空行，则提前结束读取
       break; // 提前退出，提高效率
     }
-    if (name == sheetNameSubConfig2) {
+    if (name == sheetNameSubConfig) {
       if (onlyError == "是") {
         messageOnlyError = 1;
         console.log("只推送错误消息");
@@ -296,34 +295,43 @@ function execHandle(cookie, pos) {
     messageName = "单元格A" + pos + "";
   }
   try {
-    url = "https://vip.wps.cn/sign/v2";
+    var url1 = "https://yuchen.tonghuaios.com/wp-admin/admin-ajax.php?action=daily_sign";
     headers = {
-      Cookie: "wps_sid=" + cookie,
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
-    };
-    data = {
-      platform: "8",
-      captcha_pos: "137.00431974731889, 36.00431593261568",
-      img_witdh: "275.164",
-      img_height: "69.184",
-    };
+      "Cookie": cookie,
+      "Origin": "https://yuchen.tonghuaios.com",
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "Host": "yuchen.tonghuaios.com",
+      "Accept": "application/json, text/javascript, */*; q=0.01",
 
-    let resp = HTTP.fetch(url, {
+    };
+    // data = {
+    //   'action': 'daily_sign',
+    // }
+
+    
+    // resp = HTTP.post(
+    //   url1,
+    //   JSON.stringify({ 'action': 'daily_sign', }),
+    //   { headers: headers}
+    // );
+    // console.log(resp.json())
+
+    resp = HTTP.fetch(url1, {
       method: "post",
       headers: headers,
-      data: data,
     });
 
-    try {
+    if (resp.status == 200) {
       resp = resp.json();
-      var result = resp["result"];
-      var msg = resp["msg"];
-      messageSuccess += messageName + msg + ",签到成功 ";
-    } catch {
-      messageFail += messageName + "签到失败 ";
+      console.log(resp);
+      msg = resp["msg"];
+      messageSuccess += "帐号：" + messageName + msg;
+      console.log("帐号：" + messageName + msg);
+    } else {
+      console.log(resp.text());
+      messageFail += "帐号：" + messageName + "签到失败 ";
+      console.log("帐号：" + messageName + "签到失败 ");
     }
-    console.log(resp);
   } catch {
     messageFail += messageName + "失败";
   }

@@ -1,5 +1,5 @@
 // 叮咚买菜-叮咚鱼塘自动签到
-// 20230820
+// 20240412
 
 let sheetNameSubConfig = "ddmc"; // 分配置表名称
 let sheetNameSubConfig2 = "ddmc_ddyt";
@@ -324,10 +324,69 @@ function execHandle(cookie, pos) {
       'Referer': 'https://game.m.ddxq.mobi/',
     };
 
+    headerintegral =
+    { // 积分
+        'Host': 'sunquan.api.ddxq.mobi',
+        'Cookie': cookie,
+        'Referer': 'https://activity.m.ddxq.mobi/',
+        'ddmc-city-number': '0201',
+        'ddmc-api-version': '9.7.3',
+        'Origin': 'https://activity.m.ddxq.mobi',
+        'ddmc-build-version': '10.15.0',
+        'ddmc-longitude': 114.345477,
+        'ddmc-latitude': 40.123389,
+        'ddmc-app-client-id': 3,
+        'Accept-Language': 'zh-CN,zh-Hans;q=0.9',
+        'ddmc-channel': ' ',
+        'Accept': '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'ddmc-station-id': '',
+        'ddmc-ip': '',
+    },
+
+    dataintegral = {
+      'api_version':'9.7.3',
+      'app_client_id':3,
+      'app_version':'2.14.5',
+      'app_client_name':'activity',
+      'station_id':'',
+      'native_version':'10.15.0',
+      'city_number':'0201',
+      'device_token':'',
+      'device_id':'',
+      'latitude':'40.123389',
+      'longitude':'116.345477',
+    }
+    // 积分签到
+    resp = HTTP.fetch(url[0], {
+      method: "post",
+      headers: headerintegral,
+      data : dataintegral
+    });
+
+    if (resp.status == 200) {
+      resp = resp.json();
+      console.log(resp);
+      code = resp["code"];
+      msg = resp["msg"];
+      if(code == 0){
+        messageSuccess += "帐号：" + messageName + "积分签到成功 "
+        console.log("帐号：" + messageName + "积分签到成功 ");
+      }else{
+        // {"msg":"出了点问题哦，请稍后再试吧","code":119000001,"timestamp":"2023-08-10 21:06:53","success":false,"exec_time":{}}
+        messageFail += "帐号：" + messageName + msg + " ";
+        console.log("帐号：" + messageName + msg + " ");
+      }
+    } else {
+      console.log(resp.text());
+      messageFail += "帐号：" + messageName + "积分签到失败 ";
+      console.log("帐号：" + messageName + "积分签到失败 ");
+    }
+
     // 签到领饲料
     let flagSign = 0; // 标识是否签到领取饲料
     let tempmessageFail = "";  // 记录临时失败的消息
-    let resp = HTTP.fetch(url[1], {
+    resp = HTTP.fetch(url[1], {
       method: "get",
       headers: headers,
     });
@@ -485,6 +544,8 @@ function execHandle(cookie, pos) {
     let amount = 10; // 记录剩余数目
     let amoutCount = 0; // 已喂饲料次数
     let flagAmount = 0;  // 标志，1为饲料
+    let countSeedId = 0; // 计算是不是每次浇花的剩余水量都一样，如果三次都一样，则认为seedid过期
+    let lastamount = 0; // 记录上一次剩余水量
     while(amount >= 10){
       resp = HTTP.fetch(url[3], {
         method: "get",
@@ -498,6 +559,22 @@ function execHandle(cookie, pos) {
         msg = resp["msg"];
         if(code == 0){
           amount = resp["data"]["props"]["amount"];
+
+          // 用于判断seedId是否过期，也即浇水是否失败
+          if(lastamount == amount){ // 和上次剩余水量一样，可能没浇水成功
+            countSeedId += 1; // 记录相同次数
+          }else{
+            countSeedId = 0;  // 水量不同，浇水成功，置零
+          }
+          lastamount = amount; // 记录水量，以便下一次循环使用
+          if(countSeedId >=3){  // 浇了三次剩余水量都相同，则认为浇水失败，不再浇水，并提醒用户更换新的seedId值
+            msg = "[❗❗❗提醒]seedId值可能过期，请抓包获取最新的值"
+            messageFail += "[❗❗❗提醒]seedId值可能过期，请抓包获取最新的值"
+            console.log("提前退出浇水，错误消息为：" + msg)
+            amoutCount -= 3;  // 减去浇水失败的次数
+            break;  
+          }
+
           flagAmount = 1;
           amoutCount += 1;
           console.log("喂饲料中... ,剩余饲料：" + amount)

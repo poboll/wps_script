@@ -1,9 +1,9 @@
-// WPS（轻量版、手机端签到）
-// 需配合“金山文档”中的表格内容
+// 在线工具自动签到
+// 230825
+// 用于调试
 
-let sheetNameSubConfig = "wps"; // 分配置表名称
-let sheetNameSubConfig2 = "wps_light";
-let pushHeader = "【wps轻量版】";
+let sheetNameSubConfig = "toollu"; // 分配置表名称
+let pushHeader = "【在线工具】";
 let sheetNameConfig = "CONFIG"; // 总配置表
 let sheetNamePush = "PUSH"; // 推送表名称
 let sheetNameEmail = "EMAIL"; // 邮箱表
@@ -45,7 +45,7 @@ if (flagConfig == 1) {
       // 如果为空行，则提前结束读取
       break; // 提前退出，提高效率
     }
-    if (name == sheetNameSubConfig2) {
+    if (name == sheetNameSubConfig) {
       if (onlyError == "是") {
         messageOnlyError = 1;
         console.log("只推送错误消息");
@@ -287,6 +287,7 @@ function jsonPushHandle(pushName, pushFlag, pushKey) {
 
 // 具体的执行函数
 function execHandle(cookie, pos) {
+  console.log("[+] 调试代码启动")
   let messageSuccess = "";
   let messageFail = "";
   let messageName = "";
@@ -295,38 +296,40 @@ function execHandle(cookie, pos) {
   } else {
     messageName = "单元格A" + pos + "";
   }
-  try {
-    url = "https://vip.wps.cn/sign/v2";
+  // try {
+    let url = "https://id.tool.lu/sign";
     headers = {
-      Cookie: "wps_sid=" + cookie,
+      Cookie: cookie,
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
     };
-    data = {
-      platform: "8",
-      captcha_pos: "137.00431974731889, 36.00431593261568",
-      img_witdh: "275.164",
-      img_height: "69.184",
-    };
 
     let resp = HTTP.fetch(url, {
-      method: "post",
+      method: "get",
       headers: headers,
-      data: data,
     });
 
-    try {
-      resp = resp.json();
-      var result = resp["result"];
-      var msg = resp["msg"];
-      messageSuccess += messageName + msg + ",签到成功 ";
-    } catch {
-      messageFail += messageName + "签到失败 ";
-    }
-    console.log(resp);
-  } catch {
-    messageFail += messageName + "失败";
-  }
+    // try {
+      const Reg = /你已经连续签到(.*?)天，再接再厉！/i;
+      let html = resp.text();
+      let flagTrue = Reg.test(html); // 判断是否存在字符串
+      console.log("[+] 输出是否存在匹配字符串0/1:")
+      console.log(flagTrue)
+      if (resp.status == 200 && flagTrue == true) {
+        let result = Reg.exec(html); // 提取匹配的字符串，["你已经连续签到 1 天，再接再厉！"," 1 "]
+        console.log("[+] 输出匹配结果")
+        console.log(result)
+        result = result[0];
+        messageSuccess += "帐号：" + messageName + result + "签到成功 ";
+      } else {
+        messageFail += "帐号：" + messageName + "签到失败 ";
+      }
+  //   } catch {
+  //     messageFail += "帐号：" + messageName + "签到失败 ";
+  //   }
+  // } catch {
+  //   messageFail += messageName + "失败";
+  // }
 
   sleep(2000);
   if (messageOnlyError == 1) {
