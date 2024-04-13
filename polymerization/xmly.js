@@ -1,9 +1,8 @@
-// WPS（轻量版、手机端签到）
-// 需配合“金山文档”中的表格内容
+// 喜马拉雅自动签到
+// 20231115
 
-let sheetNameSubConfig = "wps"; // 分配置表名称
-let sheetNameSubConfig2 = "wps_light";
-let pushHeader = "【wps轻量版】";
+let sheetNameSubConfig = "xmly"; // 分配置表名称
+let pushHeader = "【喜马拉雅】";
 let sheetNameConfig = "CONFIG"; // 总配置表
 let sheetNamePush = "PUSH"; // 推送表名称
 let sheetNameEmail = "EMAIL"; // 邮箱表
@@ -45,7 +44,7 @@ if (flagConfig == 1) {
       // 如果为空行，则提前结束读取
       break; // 提前退出，提高效率
     }
-    if (name == sheetNameSubConfig2) {
+    if (name == sheetNameSubConfig) {
       if (onlyError == "是") {
         messageOnlyError = 1;
         console.log("只推送错误消息");
@@ -296,34 +295,42 @@ function execHandle(cookie, pos) {
     messageName = "单元格A" + pos + "";
   }
   try {
-    url = "https://vip.wps.cn/sign/v2";
+    // 签到
+    var url1;
+    // url1 = 'https://hybrid.ximalaya.com/web-activity/signIn/v2/signIn?v=new'
+    url1 = 'https://hybrid.ximalaya.com/web-activity/signIn/v2/signIn'
     headers = {
-      Cookie: "wps_sid=" + cookie,
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
-    };
-    data = {
-      platform: "8",
-      captcha_pos: "137.00431974731889, 36.00431593261568",
-      img_witdh: "275.164",
-      img_height: "69.184",
-    };
-
-    let resp = HTTP.fetch(url, {
-      method: "post",
-      headers: headers,
-      data: data,
-    });
-
-    try {
-      resp = resp.json();
-      var result = resp["result"];
-      var msg = resp["msg"];
-      messageSuccess += messageName + msg + ",签到成功 ";
-    } catch {
-      messageFail += messageName + "签到失败 ";
+        "Host": "hybrid.ximalaya.com",
+        // 'Content-Type': 'application/json',
+        // 'Accept': '*/*',
+        "X-Xuid-Fp": "FISDYy0YZLgYhwIObU0_rmpz5ZIWc2doY1AQZ8xlyQk8pafpgABxMiE5LjAuNDMh",
+        // 'Connection': 'keep-alive',
+        "Cookie": cookie,
+        // 'User-Agent': 'ting_v9.0.87_c5(CFNetwork, iOS 15.6, iPhone14,5)',
+        // 'Content-Length': '10',
+        // 'Accept-Language': 'zh-CN,zh-Hans;q=0.9',
+        // 'Accept-Encoding': 'gzip, deflate, br',
     }
-    console.log(resp);
+    data={"aid":87}
+    resp = HTTP.post(
+      url1,
+      JSON.stringify(data),
+      { headers: headers}
+    );
+    // {"ret":0,"msg":{},"data":{"code":-2,"msg":"已打卡","continueDay":0,"totalDay":0,"roundPeriod":0,"dayAward":{},"orderData":{"value":0,"context":{},"randomQuantity":0}},"context":{}}
+
+    if (resp.status == 200) {
+      resp = resp.json();
+      console.log(resp);
+      msg = resp["data"]["msg"]
+      messageSuccess += "帐号：" + messageName  + "" + msg + " ";
+      console.log("帐号：" + messageName + "" + msg + " ");
+    } else { // 401 {"ret":50,"msg":"请登录"}
+      console.log(resp.text());
+      messageFail += "帐号：" + messageName + "签到失败 ";
+      console.log("帐号：" + messageName + "签到失败 ");
+    }
+
   } catch {
     messageFail += messageName + "失败";
   }

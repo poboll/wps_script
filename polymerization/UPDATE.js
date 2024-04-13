@@ -1,18 +1,30 @@
 // UPDATE.js 更新脚本
+// 20240412
 
 // 当前分配置表：
-// 阿里云盘（多用户版）、吾爱破解、有道云笔记、百度贴吧、
-// wps(轻量版)、wps(客户端版)、wps(稻壳版）
-// 网易云游戏、什么值得买
+// 可用脚本：
+// 阿里云盘（多用户版）、有道云笔记、百度贴吧、
+// wps(稻壳版）、网易云游戏、什么值得买、在线工具
+// 叮咚买菜-叮咚鱼塘
+// 北京时间、AcFun、喜马拉雅
+// ios游戏迷、希沃白板
+
+// 失效脚本：
+// 吾爱破解、 wps(轻量版)、wps(客户端版)
+// 时光相册、像素蛋糕、甜润世界、囍福社
+// 叮咚买菜-叮咚果园
+
 
 // 定制化分配置表:
-// 阿里云盘（多用户版）
+// 阿里云盘（多用户版）、像素蛋糕、叮咚买菜、时光相册、北京时间、WPS
 
 var confiWorkbook = 'CONFIG'  // 主配置表名称
 var pushWorkbook = 'PUSH' // 推送表的名称
 var emailWorkbook = 'EMAIL' // 邮箱表的名称
 // 分配置表名称
-var subConfigWorkbook=['aliyundrive_multiuser','52pojie','noteyoudao','wps','tieba','wangyiyungame', 'smzdm'];
+var subConfigWorkbook=['aliyundrive_multiuser','52pojie','noteyoudao','wps','tieba',
+'wangyiyungame', 'smzdm', 'toollu', 'cake', 'tianrun', 
+'xifushe', 'ddmc', 'everphoto', 'btime','acfun','xmly', 'tonghua', 'en'];
 var workbook = [] // 存储已存在表数组
 
 // 表中激活的区域的行数和列数
@@ -34,6 +46,17 @@ var configContent=[
   ['wps_docer','wps(稻壳版）','否','否'],
   ['wangyiyungame','网易云游戏','否','否'],
   ['smzdm','什么值得买抽奖','否','否'],
+  ['toollu','在线工具','否','否'],
+  ['cake','像素蛋糕','否','否'],
+  ['tianrun','甜润世界','否','否'],
+  ['xifushe','囍福社','否','否'],
+  ['ddmc_ddgy','叮咚买菜-叮咚果园','否','否'],
+  ['ddmc_ddyt','叮咚买菜-叮咚鱼塘','否','否'],
+  ['everphoto','时光相册','否','否'],
+  ['btime','北京时间','否','否'],
+  ['acfun','AcFun','否','否'],
+  ['xmly','喜马拉雅','否','否'],
+  ['tonghua','ios游戏迷','否','否'],
 ]
 
 // PUSH表内容 		
@@ -44,6 +67,7 @@ var pushContent=[
   ['ServerChan', 'xxxxxxxx', '否'],
   ['email', '若要邮箱发送，请配置EMAIL表', '否'],
   ['dingtalk', 'xxxxxxxx', '否'],
+  ['discord', '请填入镜像webhook链接,自行处理Query参数', '否'],
 ]
 
 // email表内容
@@ -59,9 +83,44 @@ var subConfigContent = [
   ['xxxxxxxx2', '否', '昵称2']
 ]
 
-// 定制化分配置表内容
+// 定制化分配置表内容，阿里云盘
 var subConfigAliyundrive = [
   ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','月末才领取奖励(是/否)'],
+  ['xxxxxxxx1', '是', '昵称1', '否'],
+  ['xxxxxxxx2', '否', '昵称2', '否']
+]
+
+// 定制化分配置表内容，像素蛋糕
+var subConfigCake= [
+  ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','xy-extra-data'],
+  ['xxxxxxxx1', '是', '昵称1', 'xxxxxxxx'],
+  ['xxxxxxxx2', '否', '昵称2', 'xxxxxxxx']
+]
+
+// 定制化分配置表内容，叮咚买菜
+var subConfigDdmc = [
+  ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','seedId_ddgy','propsId_ddgy','seedId_ddyt','propsId_ddty'],
+  ['xxxxxxxx1', '是', '昵称1', '填果园seedId', '填果园propsId', '填鱼塘seedId', '填鱼塘propsId'],
+  ['xxxxxxxx2', '否', '昵称2', '填果园seedId', '填果园propsId', '填鱼塘seedId', '填鱼塘propsId']
+]
+
+// 定制化分配置表内容，时光相册
+var subConfigEverphoto = [
+  ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','x-Tt-Token'],
+  ['xxxxxxxx1', '是', '昵称1', 'xxxxxxxx'],
+  ['xxxxxxxx2', '否', '昵称2', 'xxxxxxxx']
+]
+
+// 定制化分配置表内容，北京时间
+var subConfigBtime = [
+  ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','safeparams','safetoken'],
+  ['xxxxxxxx1', '是', '昵称1', 'xxxxxxxx', 'xxxxxxxx'],
+  ['xxxxxxxx2', '否', '昵称2', 'xxxxxxxx', 'xxxxxxxx']
+]
+
+// 定制化分配置表内容，WPS
+var subConfigWps = [
+  ['cookie(默认20个)','是否执行(是/否)','账号名称(可不填写)','转存PPT(是/否)'],
   ['xxxxxxxx1', '是', '昵称1', '否'],
   ['xxxxxxxx2', '否', '昵称2', '否']
 ]
@@ -99,6 +158,21 @@ for(let i = 0; i < length; i++){
 // 写入定制化内容
 ActivateSheet(subConfigWorkbook[0]) // 激活阿里云盘分配置表
 editConfigSheet(subConfigAliyundrive)  // editSubConfigCustomized(subConfigAliyundrive)
+
+ActivateSheet(subConfigWorkbook[8]) // 激活像素蛋糕分配置表
+editConfigSheet(subConfigCake)  
+
+ActivateSheet(subConfigWorkbook[11]) // 激活叮咚买菜分配置表
+editConfigSheet(subConfigDdmc)  
+
+ActivateSheet(subConfigWorkbook[12]) // 激活时光相册分配置表
+editConfigSheet(subConfigEverphoto)  
+
+ActivateSheet(subConfigWorkbook[13]) // 激活北京时间分配置表
+editConfigSheet(subConfigBtime)  
+
+ActivateSheet(subConfigWorkbook[3]) // 激活WPS分配置表
+editConfigSheet(subConfigWps)  
 
 
 // 判断表格行列数，并记录目前已写入的表格行列数。目的是为了不覆盖原有数据，便于更新
