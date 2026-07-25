@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">WPS AirScript Daily Check-in</title>
+  <desc id="desc">WPS AirScript multi-account daily check-in scripts</desc>
+  <rect width="1280" height="640" fill="#101828"/>
+  <rect x="72" y="72" width="1136" height="496" rx="24" fill="#ffffff"/>
+  <rect x="72" y="72" width="16" height="496" fill="#e5484d"/>
+  <g transform="translate(136 132)">
+    <rect width="96" height="96" rx="20" fill="#e5484d"/>
+    <path d="M24 30h48v10H38v12h29v10H38v14H24z" fill="#ffffff"/>
+  </g>
+  <text x="264" y="176" fill="#101828" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">WPS AirScript</text>
+  <text x="264" y="220" fill="#475467" font-family="Arial, Helvetica, sans-serif" font-size="24">Daily check-in automation</text>
+  <text x="136" y="344" fill="#101828" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">签到脚本集合</text>
+  <text x="140" y="402" fill="#475467" font-family="Arial, Helvetica, sans-serif" font-size="28">多账号 · 表格配置 · 定时执行 · 结果回写</text>
+  <g transform="translate(140 464)" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">
+    <rect width="168" height="48" rx="8" fill="#ecfdf3"/>
+    <circle cx="26" cy="24" r="7" fill="#12b76a"/>
+    <text x="44" y="31" fill="#027a48">12 TASKS</text>
+    <rect x="188" width="206" height="48" rx="8" fill="#eff8ff"/>
+    <text x="214" y="31" fill="#175cd3">AIRSCRIPT READY</text>
+    <rect x="414" width="286" height="48" rx="8" fill="#fff6ed"/>
+    <text x="438" y="31" fill="#b93815" font-size="18">CHECKED 2026-07-25</text>
+  </g>
+</svg>

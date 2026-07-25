@@ -1,17 +1,27 @@
 <p align="center">
-    <img src="https://socialify.git.ci/poboll/wps_script/image?description=1&descriptionEditable=WPS%E7%AD%BE%E5%88%B0%E8%84%9A%E6%9C%AC%E9%9B%86%E5%90%88%EF%BC%8C%E9%80%82%E7%94%A8%E4%BA%8E%E2%80%9C%E9%87%91%E5%B1%B1%E6%96%87%E6%A1%A3%E2%80%9D%E4%B8%ADAirScript%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%A7%E8%A1%8C%E3%80%82%E7%AD%BE%E5%88%B0%E5%88%97%E8%A1%A8%3A%20%EF%BD%9C%E7%88%B1%E5%A5%87%E8%89%BA%EF%BD%9C%E5%85%A8%E6%B0%91K%E6%AD%8C%EF%BD%9C%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0%EF%BD%9C%E7%99%BE%E5%BA%A6%E8%B4%B4%E5%90%A7%EF%BD%9CBilibili%EF%BD%9CV2EX%EF%BD%9CAcFun%EF%BD%9C%E5%A4%A9%E7%BF%BC%E4%BA%91%E7%9B%98%EF%BD%9CFa%E7%B1%B3%E5%AE%B6%EF%BD%9C%E5%B0%8F%E7%B1%B3%E8%BF%90%E5%8A%A8%EF%BD%9C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E8%B5%84%E6%BA%90%E5%B9%B3%E5%8F%B0%EF%BD%9C&font=KoHo&forks=1&issues=1&language=1&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto"/>
+    <img src="./docs/images/project-preview.svg" alt="WPS AirScript 签到脚本集合" width="100%"/>
     <br><strong><font size=50>签到脚本集合</font></strong>
     <br>基于【金山文档】的签到脚本
     <br>支持多账号使用、支持消息推送
 </p>
 
 <p align="center">
-    <a href="https://github.com/poboll/wps_script/stargazers"><img src="https://img.shields.io/github/stars/poboll/wps_script?style=popout-square" alt="GitHub stars"></a>
-    <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=popout-square" alt="GitHub forks"></a>
-    <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=popout-square" alt="GitHub issues"></a>
+    <a href="https://github.com/poboll/wps_script/stargazers"><img src="https://img.shields.io/github/stars/poboll/wps_script?style=flat-square" alt="GitHub stars"></a>
+    <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=flat-square" alt="GitHub forks"></a>
+    <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=flat-square" alt="GitHub issues"></a>
+    <a href="https://wps-docs.caiths.com"><img src="https://img.shields.io/badge/docs-wps--docs.caiths.com-175cd3?style=flat-square" alt="Documentation"></a>
 </p>
 
 ## 前往 [说明文档wps-docs.caiths.com](https://wps-docs.caiths.com) [脚本仓库/wps_script](https://github.com/poboll/wps_script)
+
+## 2026-07-25 维护更新
+
+- 参考 [`Sitoi/dailycheckin`](https://github.com/Sitoi/dailycheckin/tree/135cc236e59ac4f14bcddc44acb3cbb3ed6010b5) 的当前实现，新增 AirScript 统一适配器 [`polymerization/dailycheckin.js`](./polymerization/dailycheckin.js)
+- 适配 12 个候选任务；脚本支持多账号、结果回写和执行时间记录
+- `UPDATE.js` 会自动创建 `dailycheckin` 配置表，不覆盖已有凭据
+- AirScript 能力、适配范围和未适配原因见 [DailyCheckIn AirScript 适配说明](./docs/dailycheckin-airscript-cn.md)
+
+> 当前维护验证不包含用户真实 Cookie。表中“已适配”表示已完成 AirScript 语法、请求参数和模拟响应检查，不等同于真实账号线上实测。
 
 ## 聚合脚本（polymerization）[聚合脚本教程](./polymerization.md)
 
@@ -48,31 +58,28 @@
 
 ## 签到列表
 
-🟢: 正常运行 🔴: 暂不可用 🟡: 待测试 🟤: 随缘
+🟢: 已有用户验证 🟡: 已完成 AirScript 适配，待真实凭据验证 🟠: 部分适配 🔴: 未适配或已失效
 
-| 状态 | 类别 | 终端 | 任务名称 | 脚本名称 | 检查日期 | 是否支持多用户 | 是否需要表格 |备注 |使用步骤 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 🟢️ | 签到 | WEB | [阿里云盘(极简版)](https://www.aliyundrive.com) | aliyundrive_light.js | 2024-04-20 | 否 | 是 | 签到，无推送功能 |待编写 |
-| 🟢️ | 签到 | WEB | [阿里云盘(多用户版)](https://www.aliyundrive.com) | aliyundrive_multiuser.js | 2024-04-20 | 是 | 是 | 签到、自动领取首个任务奖励 |待编写 |
-| 🟤 | 签到 | WEB | [百度贴吧](https://tieba.baidu.com) | tieba.js | 2024-04-20 | 是 | 是 | 签到、只能签6个左右 |待编写 |
-| 🔴 | 签到 | WEB | [吾爱论坛](https://www.52pojie.cn) | 52pojie.js | 2024-04-20 | 是 | 是 | 签到 |待编写 |
-| 🟢️ | 签到 | WEB | [有道云笔记](https://note.youdao.com/) |noteyoudao.js | 2024-04-20 | 是 | 是 | 签到、领取空间 |[有道云](./docs/aliyundrive-cn.md) |
-| 🟤 | 签到 | 移动端 | [WPS(轻量版)](https://vip.wps.cn/) |wps_light.js | 2024-04-20 | 是 | 是 | 适用于手机端签到，不具备绕验证码功能 |待编写|
-| 🔴 | 签到 | 移动端 | [WPS(客户端版)](https://vip.wps.cn/) |wps_client.js | 2024-04-20 | 是 | 是 | 适用于PC端签到，需要手动兑换奖励 |待编写|
-| 🟢️ | 签到 | 移动端 | [WPS(稻壳版)](https://vip.wps.cn/) |wps_docker.js | 2024-04-20 | 是 | 是 | 适用于稻壳签到，自动领取和保存每日PPT | 待编写 |
-| 🟢️ | 签到 | 移动端 | [网易云游戏](https://cg.163.com/) |wangyiyungame.js | 2024-04-20 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 签到 | 移动端 | [什么值得买](https://www.smzdm.com/) |smzdm.js | 2024-04-20 | 是 | 是 | 抽奖 | 待编写 |
-| 🟢️ | 签到 | WEB | [在线工具](https://tool.lu/) | toolu.js | 2024-04-20 | 是 | 是 | 签到 | 签到获取积分 |
-| 🟡 | 签到 | 小程序 | 像素蛋糕 | cake.js | 2024-04-20 | 是 | 是 | 签到 | 待编写 |
-| 🟡 | 签到 | 小程序 | 甜润世界 | tianrun.js | 2024-04-20 | 是 | 是 | 签到 | 待编写 |
-| 🔴 | 多功能 | APP | [叮咚买菜-叮咚果园](https://ddxq.mobi) | ddmy_ddgy.js | 2024-04-20 | 是 | 是 | 领积分、签到、浇水 | 待编写 |
-| 🟢️ | 多功能 | APP | [叮咚买菜-叮咚鱼塘](https://ddxq.mobi) | ddmy_ddyt.js | 2024-04-20 | 是 | 是 | 签到、喂饲料 | 待编写 |
-| 🟢️ | 签到 | APP | [时光相册](https://www.everphoto.cn/) | everphoto.js | 2024-04-20 | 是 | 是 | 签到、领空间 | 待编写 |
-| 🟢️ | 签到 | APP | [北京时间](https://www.btime.com) | btime.js | 2024-04-20 | 是 | 是 | 签到、领时间币 | 待编写 |
-| 🟢️ | 签到 | APP | [AcFun](https://www.acfun.cn) | acfun.js | 2024-04-20 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 签到 | APP | [喜马拉雅](https://www.ximalaya.com) | xmly.js | 2024-04-20 | 是 | 是 | 签到 | 待编写 |
-| 🟢️ | 签到 | WEB | [ios游戏迷](https://yuchen.tonghuaios.com) | xmly.js | 2024-04-20 | 是 | 是 | 签到得积分 | 待编写 |
-| 🟢️ | 签到 | APP | [希沃白板](http://id.seewo.com) | easinote.js | 2024-04-12 | 是 | 是 | 签到得积分 | 待编写 |
+| 状态 | 任务 | 任务标识 / 脚本 | 检查日期 | 当前范围 |
+| --- | --- | --- | --- | --- |
+| 🟡 | [有道云笔记](https://note.youdao.com/) | `YOUDAO` | 2026-07-25 | 签到、广告空间 |
+| 🟡 | [阿里云盘](https://www.aliyundrive.com/) | `ALIYUN` | 2026-07-25 | 刷新令牌、签到、领取奖励 |
+| 🟡 | [百度网盘](https://pan.baidu.com/) | `BAIDUWP` | 2026-07-25 | 会员签到、每日答题、会员信息 |
+| 🟡 | [Bilibili](https://www.bilibili.com/) | `BILIBILI` | 2026-07-25 | 登录检查、直播与漫画签到 |
+| 🟡 | [V2EX](https://www.v2ex.com/) | `V2EX` | 2026-07-25 | 每日奖励、余额查询 |
+| 🟡 | [AcFun](https://www.acfun.cn/) | `ACFUN` | 2026-07-25 | 每日签到、等级和香蕉查询 |
+| 🟡 | [恩山无线论坛](https://www.right.com.cn/forum/) | `ENSHAN` | 2026-07-25 | formhash 签到 |
+| 🟡 | [飞牛 NAS 社区](https://club.fnnas.com/) | `FNNASCLUB` | 2026-07-25 | 每日打卡 |
+| 🟡 | [百度贴吧](https://tieba.baidu.com/) | `TIEBA` | 2026-07-25 | MD5 签名、关注贴吧逐吧签到 |
+| 🟡 | [什么值得买](https://www.smzdm.com/) | `SMZDM` | 2026-07-25 | token 与 MD5 签名签到 |
+| 🟠 | [爱奇艺](https://www.iqiyi.com/) | `IQIYI` | 2026-07-25 | 账号与成长信息；未启用高频抽奖 |
+| 🟠 | [全民 K 歌](https://kg.qq.com/) | `KGQQ` | 2026-07-25 | 六类签到奖励请求；接口字段易变化 |
+| 🔴 | i 茅台 | 未适配 | 2026-07-25 | 设备、定位和申购行为不适合普通签到脚本 |
+| 🔴 | 小米运动 | 未适配 | 2026-07-25 | 涉及账号登录、数据修改和风控 |
+| 🔴 | 百度站点提交 | 未适配 | 2026-07-25 | 属于站长工具，不是个人签到 |
+| 🔴 | 奥拉星 | 未适配 | 2026-07-25 | 老旧活动接口且缺少可验证账号 |
+
+以上 DailyCheckIn 任务统一使用 [`polymerization/dailycheckin.js`](./polymerization/dailycheckin.js)。原有历史脚本仍保留，但未在 2026-07-25 使用真实账号重新验证，不能沿用旧的绿色状态。
 
 ## 支持的通知列表
 
