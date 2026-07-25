@@ -1,24 +1,103 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
-  <title id="title">WPS AirScript Daily Check-in</title>
-  <desc id="desc">WPS AirScript multi-account daily check-in scripts</desc>
-  <rect width="1280" height="640" fill="#101828"/>
-  <rect x="72" y="72" width="1136" height="496" rx="24" fill="#ffffff"/>
-  <rect x="72" y="72" width="16" height="496" fill="#e5484d"/>
-  <g transform="translate(136 132)">
-    <rect width="96" height="96" rx="20" fill="#e5484d"/>
-    <path d="M24 30h48v10H38v12h29v10H38v14H24z" fill="#ffffff"/>
+  <title id="title">poboll WPS AirScript 每日任务自动化</title>
+  <desc id="desc">13 项任务、表格配置、定时执行、结果回写与消息推送</desc>
+  <rect width="1280" height="640" fill="#f5f7fa"/>
+  <path d="M0 0h1280v10H0z" fill="#e5484d"/>
+  <path d="M0 612h1280v28H0z" fill="#17212b"/>
+
+  <g transform="translate(72 62)">
+    <rect width="56" height="56" rx="8" fill="#e5484d"/>
+    <path d="M15 16h29v7H24v8h17v7H24v10h-9z" fill="#ffffff"/>
+    <text x="76" y="25" fill="#17212b" font-family="Arial, 'PingFang SC', sans-serif" font-size="24" font-weight="700">WPS AirScript</text>
+    <text x="76" y="49" fill="#667085" font-family="Arial, 'PingFang SC', sans-serif" font-size="16">poboll / wps_script</text>
   </g>
-  <text x="264" y="176" fill="#101828" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">WPS AirScript</text>
-  <text x="264" y="220" fill="#475467" font-family="Arial, Helvetica, sans-serif" font-size="24">Daily check-in automation</text>
-  <text x="136" y="344" fill="#101828" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">签到脚本集合</text>
-  <text x="140" y="402" fill="#475467" font-family="Arial, Helvetica, sans-serif" font-size="28">多账号 · 表格配置 · 定时执行 · 结果回写</text>
-  <g transform="translate(140 464)" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">
-    <rect width="168" height="48" rx="8" fill="#ecfdf3"/>
-    <circle cx="26" cy="24" r="7" fill="#12b76a"/>
-    <text x="44" y="31" fill="#027a48">12 TASKS</text>
-    <rect x="188" width="206" height="48" rx="8" fill="#eff8ff"/>
-    <text x="214" y="31" fill="#175cd3">AIRSCRIPT READY</text>
-    <rect x="414" width="286" height="48" rx="8" fill="#fff6ed"/>
-    <text x="438" y="31" fill="#b93815" font-size="18">CHECKED 2026-07-25</text>
+
+  <g transform="translate(72 180)" font-family="Arial, 'PingFang SC', sans-serif">
+    <text x="0" y="0" fill="#17212b" font-size="56" font-weight="700">每日任务自动化</text>
+    <text x="2" y="52" fill="#475467" font-size="24">多账号配置 · 定时执行 · 结果回写 · 消息推送</text>
+
+    <g transform="translate(0 108)">
+      <rect width="154" height="70" rx="8" fill="#ffffff" stroke="#d0d5dd"/>
+      <text x="18" y="30" fill="#b54708" font-size="26" font-weight="700">13</text>
+      <text x="18" y="53" fill="#667085" font-size="15">可用任务</text>
+    </g>
+    <g transform="translate(170 108)">
+      <rect width="154" height="70" rx="8" fill="#ffffff" stroke="#d0d5dd"/>
+      <text x="18" y="30" fill="#b54708" font-size="26" font-weight="700">3</text>
+      <text x="18" y="53" fill="#667085" font-size="15">明确排除</text>
+    </g>
+    <g transform="translate(340 108)">
+      <rect width="194" height="70" rx="8" fill="#ffffff" stroke="#d0d5dd"/>
+      <text x="18" y="30" fill="#175cd3" font-size="22" font-weight="700">2026-07-26</text>
+      <text x="18" y="53" fill="#667085" font-size="15">代码审计日期</text>
+    </g>
+
+    <g transform="translate(0 220)">
+      <rect width="190" height="38" rx="4" fill="#ecfdf3"/>
+      <circle cx="20" cy="19" r="6" fill="#12b76a"/>
+      <text x="36" y="25" fill="#067647" font-size="15" font-weight="700">OFFICIAL API ONLY</text>
+    </g>
   </g>
+
+  <g transform="translate(690 74)" font-family="Arial, 'PingFang SC', sans-serif">
+    <rect width="518" height="478" rx="8" fill="#ffffff" stroke="#d0d5dd"/>
+    <rect width="518" height="52" rx="8" fill="#17212b"/>
+    <path d="M0 44h518v8H0z" fill="#17212b"/>
+    <circle cx="24" cy="26" r="5" fill="#e5484d"/>
+    <circle cx="42" cy="26" r="5" fill="#fdb022"/>
+    <circle cx="60" cy="26" r="5" fill="#12b76a"/>
+    <text x="86" y="32" fill="#ffffff" font-size="16" font-weight="700">daily · 自动化任务表</text>
+
+    <g transform="translate(18 72)" font-size="14">
+      <rect width="482" height="38" fill="#f2f4f7"/>
+      <text x="14" y="25" fill="#344054" font-weight="700">任务</text>
+      <text x="142" y="25" fill="#344054" font-weight="700">状态</text>
+      <text x="286" y="25" fill="#344054" font-weight="700">执行范围</text>
+
+      <g transform="translate(0 38)">
+        <path d="M0 0h482M0 54h482" stroke="#eaecf0"/>
+        <text x="14" y="34" fill="#17212b" font-weight="700">ALIYUN</text>
+        <circle cx="150" cy="28" r="6" fill="#12b76a"/>
+        <text x="164" y="33" fill="#067647">可用·代码验证</text>
+        <text x="286" y="33" fill="#475467">签到与奖励</text>
+      </g>
+      <g transform="translate(0 92)">
+        <path d="M0 54h482" stroke="#eaecf0"/>
+        <text x="14" y="34" fill="#17212b" font-weight="700">TIEBA</text>
+        <circle cx="150" cy="28" r="6" fill="#f79009"/>
+        <text x="164" y="33" fill="#b54708">可用·受限</text>
+        <text x="286" y="33" fill="#475467">分页与 MD5 签名</text>
+      </g>
+      <g transform="translate(0 146)">
+        <path d="M0 54h482" stroke="#eaecf0"/>
+        <text x="14" y="34" fill="#17212b" font-weight="700">BILIBILI</text>
+        <circle cx="150" cy="28" r="6" fill="#f79009"/>
+        <text x="164" y="33" fill="#b54708">可用·受限</text>
+        <text x="286" y="33" fill="#475467">签到与账号任务</text>
+      </g>
+      <g transform="translate(0 200)">
+        <path d="M0 54h482" stroke="#eaecf0"/>
+        <text x="14" y="34" fill="#17212b" font-weight="700">KGQQ</text>
+        <circle cx="150" cy="28" r="6" fill="#f79009"/>
+        <text x="164" y="33" fill="#b54708">可用·受限</text>
+        <text x="286" y="33" fill="#475467">奖励与鲜花差值</text>
+      </g>
+      <g transform="translate(0 254)">
+        <path d="M0 54h482" stroke="#eaecf0"/>
+        <text x="14" y="34" fill="#17212b" font-weight="700">BAIDU</text>
+        <circle cx="150" cy="28" r="6" fill="#12b76a"/>
+        <text x="164" y="33" fill="#067647">可用·代码验证</text>
+        <text x="286" y="33" fill="#475467">站点 URL 提交</text>
+      </g>
+
+      <g transform="translate(0 332)">
+        <rect width="482" height="54" rx="6" fill="#eff8ff"/>
+        <path d="M18 27h16M26 19v16" stroke="#175cd3" stroke-width="2"/>
+        <text x="48" y="25" fill="#175cd3" font-size="14" font-weight="700">CONFIG · PUSH · EMAIL</text>
+        <text x="48" y="43" fill="#475467" font-size="12">统一配置与通知</text>
+      </g>
+    </g>
+  </g>
+
+  <text x="72" y="630" fill="#ffffff" font-family="Arial, 'PingFang SC', sans-serif" font-size="13">WPS AirScript · JavaScript · MIT License · Maintained by poboll</text>
 </svg>

@@ -1,5 +1,6 @@
 // UPDATE.js 更新脚本
-// 20260725
+// AirScript adaptation and modifications Copyright (c) 2026 poboll
+// 20260726
 
 // 当前分配置表：
 // 可用脚本：
@@ -24,7 +25,7 @@ var emailWorkbook = 'EMAIL' // 邮箱表的名称
 // 分配置表名称
 var subConfigWorkbook=['aliyundrive_multiuser','52pojie','noteyoudao','wps','tieba',
 'wangyiyungame', 'smzdm', 'toollu', 'cake', 'tianrun', 
-'xifushe', 'ddmc', 'everphoto', 'btime','acfun','xmly', 'tonghua', 'en', 'dailycheckin'];
+'xifushe', 'ddmc', 'everphoto', 'btime','acfun','xmly', 'tonghua', 'en', 'daily'];
 var workbook = [] // 存储已存在表数组
 
 // 表中激活的区域的行数和列数
@@ -57,7 +58,7 @@ var configContent=[
   ['acfun','AcFun','否','否'],
   ['xmly','喜马拉雅','否','否'],
   ['tonghua','ios游戏迷','否','否'],
-  ['dailycheckin','DailyCheckIn 适配任务','否','是'],
+  ['daily','每日任务聚合脚本','否','是'],
 ]
 
 // PUSH表内容 		
@@ -126,9 +127,9 @@ var subConfigWps = [
   ['xxxxxxxx2', '否', '昵称2', '否']
 ]
 
-// DailyCheckIn 统一适配表。B 列根据任务填写 Cookie 或 refresh_token。
-var subConfigDailyCheckin = [
-  ['任务标识','Cookie / refresh_token','是否执行(是/否)','账号名称(可不填写)','最近结果','执行时间'],
+// 每日任务聚合表。B 列可填写原始凭据或文档中说明的 JSON 配置。
+var subConfigDaily = [
+  ['任务标识','凭据 / JSON 配置','是否执行(是/否)','账号名称(可不填写)','最近结果','执行时间'],
   ['YOUDAO','填写 Cookie','否','有道云笔记','',''],
   ['ALIYUN','填写 refresh_token','否','阿里云盘','',''],
   ['BAIDUWP','填写 Cookie','否','百度网盘','',''],
@@ -141,6 +142,7 @@ var subConfigDailyCheckin = [
   ['SMZDM','填写 Cookie','否','什么值得买','',''],
   ['IQIYI','填写含 P00001 的 Cookie','否','爱奇艺','',''],
   ['KGQQ','填写含 uid 的 Cookie','否','全民 K 歌','',''],
+  ['BAIDU','填写 data_url 和 submit_url 的 JSON','否','百度站点提交','',''],
 ]
 
 // var mosaic = "xxxxxxxx" // 马赛克
@@ -169,7 +171,7 @@ editConfigSheet(emailContent)
 createSubConfig()
 let length = subConfigWorkbook.length
 for(let i = 0; i < length; i++){
-  if(subConfigWorkbook[i] == 'dailycheckin'){
+  if(subConfigWorkbook[i] == 'daily'){
     continue
   }
   ActivateSheet(subConfigWorkbook[i])
@@ -195,8 +197,8 @@ editConfigSheet(subConfigBtime)
 ActivateSheet(subConfigWorkbook[3]) // 激活WPS分配置表
 editConfigSheet(subConfigWps)  
 
-ActivateSheet('dailycheckin')
-editConfigSheet(subConfigDailyCheckin)
+ActivateSheet('daily')
+editConfigSheet(subConfigDaily)
 
 
 // 判断表格行列数，并记录目前已写入的表格行列数。目的是为了不覆盖原有数据，便于更新
@@ -233,7 +235,7 @@ function ActivateSheet(sheetName){
     sheet.Activate()
     console.log("激活工作表：" + sheet.Name)
     flag = 1;
-  }catch{
+  }catch(error){
     flag = 0;
     console.log("无法激活工作表，工作表可能不存在")
   }

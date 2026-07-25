@@ -1,292 +1,163 @@
 <p align="center">
-    <img src="./docs/images/project-preview.svg" alt="WPS AirScript 签到脚本集合" width="100%"/>
-    <br><strong><font size=50>签到脚本集合</font></strong>
-    <br>基于【金山文档】的签到脚本
-    <br>支持多账号使用、支持消息推送
+  <img src="./docs/images/project-preview.svg" alt="poboll WPS AirScript 每日任务自动化预览" width="100%">
 </p>
+
+<h1 align="center">WPS AirScript 自动化脚本</h1>
+
+<p align="center">在金山文档中配置多账号、定时执行任务、回写结果并统一推送通知。</p>
 
 <p align="center">
-    <a href="https://github.com/poboll/wps_script/stargazers"><img src="https://img.shields.io/github/stars/poboll/wps_script?style=flat-square" alt="GitHub stars"></a>
-    <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=flat-square" alt="GitHub forks"></a>
-    <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=flat-square" alt="GitHub issues"></a>
-    <a href="https://wps-docs.caiths.com"><img src="https://img.shields.io/badge/docs-wps--docs.caiths.com-175cd3?style=flat-square" alt="Documentation"></a>
+  <a href="https://github.com/poboll/wps_script/stargazers"><img src="https://img.shields.io/github/stars/poboll/wps_script?style=flat-square" alt="GitHub stars"></a>
+  <a href="https://github.com/poboll/wps_script/network/members"><img src="https://img.shields.io/github/forks/poboll/wps_script?style=flat-square" alt="GitHub forks"></a>
+  <a href="https://github.com/poboll/wps_script/issues"><img src="https://img.shields.io/github/issues/poboll/wps_script?style=flat-square" alt="GitHub issues"></a>
+  <a href="https://wps-docs.caiths.com"><img src="https://img.shields.io/badge/docs-wps--docs.caiths.com-175CD3?style=flat-square" alt="在线文档"></a>
+  <img src="https://img.shields.io/badge/checked-2026--07--26-067647?style=flat-square" alt="检查日期 2026-07-26">
 </p>
 
-## 前往 [说明文档wps-docs.caiths.com](https://wps-docs.caiths.com) [脚本仓库/wps_script](https://github.com/poboll/wps_script)
+## 项目说明
 
-## 2026-07-25 维护更新
+本仓库提供适用于 WPS AirScript 的 JavaScript 自动化脚本。`polymerization` 是当前维护的聚合版本；`single` 是历史独立版本，不再作为主要维护目标。
 
-- 参考 [`Sitoi/dailycheckin`](https://github.com/Sitoi/dailycheckin/tree/135cc236e59ac4f14bcddc44acb3cbb3ed6010b5) 的当前实现，新增 AirScript 统一适配器 [`polymerization/dailycheckin.js`](./polymerization/dailycheckin.js)
-- 适配 12 个候选任务；脚本支持多账号、结果回写和执行时间记录
-- `UPDATE.js` 会自动创建 `dailycheckin` 配置表，不覆盖已有凭据
-- AirScript 能力、适配范围和未适配原因见 [DailyCheckIn AirScript 适配说明](./docs/dailycheckin-airscript-cn.md)
+- [在线文档](https://wps-docs.caiths.com)
+- [从零配置聚合脚本](https://wps-docs.caiths.com/polymerization)
+- [13 项任务与 B 列字段](https://wps-docs.caiths.com/daily-tasks)
+- [电脑端获取凭据](https://wps-docs.caiths.com/more/desktop)
+- [iOS 抓包教程](https://wps-docs.caiths.com/more/ios)
+- [Android 抓包教程](https://wps-docs.caiths.com/more/android)
+- [仓库内电脑端教程](./docs/desktop-cn.md)
+- [仓库内 iOS 教程](./docs/ios-cn.md)
+- [仓库内 Android 教程](./docs/android-cn.md)
+- [每日任务适配说明](./docs/daily-airscript-cn.md)
+- [聚合脚本使用说明](./docs/polymerization-cn.md)
+- [脚本仓库](https://github.com/poboll/wps_script)
 
-> 当前维护验证不包含用户真实 Cookie。表中“已适配”表示已完成 AirScript 语法、请求参数和模拟响应检查，不等同于真实账号线上实测。
+## 2026-07-26 更新
 
-## 聚合脚本（polymerization）[聚合脚本教程](./polymerization.md)
+- 新增 [`polymerization/daily.js`](./polymerization/daily.js)，纳入 13 项适合 AirScript 且当前未确认下线的任务。
+- 更新 [`polymerization/UPDATE.js`](./polymerization/UPDATE.js)，可自动创建 `daily` 配置表，不覆盖已有单元格。
+- 按 AirScript 官方文档重写 HTTP、MD5、Buffer、休眠和表格逻辑，不使用第三方包或未支持语法。
+- 将资产消耗、公开互动和抽奖等扩展流程改为显式开关；高请求量核心流程设置上限并节流。
+- 增加 13 项任务的模拟契约测试，并明确区分“代码验证”和“真实账号验证”。
 
-文件夹“polymerization”为聚合脚本，运行UPDATE.js即可自动生成表格及配置内容。
+> 维护者没有使用用户 Cookie、密码或令牌进行线上测试。本文的“已适配”表示语法、请求结构、分支和模拟响应已检查，不代表第三方私有接口永久可用。
 
-### 聚合脚本优势
+## 快速开始
 
-* 所有脚本及配置表格汇集在一个文档中，利于统一管理和配置
-* 方便后续更新脚本，仅需运行UPDATE脚本即可自动新增最新表格及配置，不再需要手动新建表格框架
-* 方便定时任务的添加与查看
-* 支持仅推送错误消息、推送昵称等，支持更多的推送方式
-* 配置灵活快捷，利于新增脚本及新配置功能
-* 支持多脚本共用同一个表格，如WPS(轻量版)、WPS(客户端版)、WPS(稻壳版)脚本共用名称为wps的表格。
+1. 在金山文档中新建智能表格，并打开 **AirScript 1.0** 编辑器。
+2. 在编辑器的“服务”中添加“网络 API”；需要邮件推送时再添加邮件服务。
+3. 复制并运行 [`polymerization/UPDATE.js`](./polymerization/UPDATE.js)，创建配置表。
+4. 在 `daily` 表中填写任务标识和凭据，将“是否执行”改为“是”。
+5. 新建自动化脚本，复制 [`polymerization/daily.js`](./polymerization/daily.js)，按需设置定时任务。
 
-## 调试脚本（DEBUG、仅用于测试脚本错误）
-文件夹“DEBUG”为适配聚合版脚本的调试脚本，如果运行聚合脚本出现问题，可复制此文件夹内的调试脚本并运行，可一定程度指出是何种错误。
+`daily` 表结构：
 
-## 非聚合脚本（独立脚本、single，非聚合脚本目前已不再维护）
+| A：任务标识 | B：凭据或 JSON 配置 | C：是否执行 | D：账号名称 | E：最近结果 | F：执行时间 |
+| --- | --- | --- | --- | --- | --- |
+| `ALIYUN` | `refresh_token` | 否 | 阿里云盘 | 自动回写 | 自动回写 |
+| `TIEBA` | `BDUSS=...; ...` | 否 | 百度贴吧 | 自动回写 | 自动回写 |
 
-文件夹“single”为独立脚本，需要手动创建表格。一个文档内只有一个脚本呢。
+请勿在 Issue、截图、日志或公开文档中提交真实凭据。
 
-### 非聚合脚本表格内容参考
+## AirScript 能力边界
 
-| cookie(默认20个) | 是否执行(是/否) | 账号名称(可不填写) | bark   | 是否推送(是/否) | pushplus | 是否推送(是/否) | ServerChan | 是否推送(是/否) |
-| ---------------- | --------------- | ------------------ | ------ | --------------- | -------- | --------------- | ---------- | --------------- |
-| xxxxxxxx1        | 是              | 昵称1              | xxxxxx | 否              | xxxxxx   | 否              | xxxxxx     | 否              |
-| xxxxxxxx2        | 否              | 昵称2              |        |                 |          |                 |            |                 |
+本次实现以 WPS 官方文档为准：
 
-## 更多  
+- 本项目使用 AirScript 1.0。2.0 当前尚未开放邮件 API，不能直接替代本项目的可选 SMTP 推送。
+- [脚本语言](https://airsheet.wps.cn/docs/guide/rules.html)：支持大部分 ES6；不使用官方明确不支持的 `class`、对象方法简写、`import/export`、可选链、`await` 和生成器。
+- [网络 API](https://airsheet.wps.cn/docs/api/advanced/HTTP.html)：使用同步 `HTTP.fetch/get/post`、请求头、字符串请求体和 0-60000 ms 超时。
+- [内置函数](https://airsheet.wps.cn/docs/api/build-in.html)：只使用官方列出的 MD5/SHA/HMAC、`Buffer` 和 `Time.sleep()`。
+- [Application](https://airsheet.wps.cn/docs/api/excel/databook/Application.html) 与 [Range](https://airsheet.wps.cn/docs/api/excel/workbook/Range.html)：使用官方表格 API 创建/切换工作表，并通过 `Text` 和 `Value` 读写单元格。
+- [邮件 API](https://airsheet.wps.cn/docs/api/advanced/SMTP.html)：可选 SMTP 推送使用 1.0 的 `SMTP.login()` 和 `mailer.send()`。
+- [AirScript 2.0 概述](https://airsheet.wps.cn/docs/apiV2/overview.html)：官方标明邮件 API 仍待开放，且部分 1.0 API 不能完全兼容。
+- [高级服务限制](https://airsheet.wps.cn/docs/api/advanced/Overview.html#使用限制)：外部地址不能使用 IP 或显式端口，响应体不能超过 2 MB，高频调用需要主动节流。
 
-[IOS手机端获取cookie的方法可参考](./docs/ios-cn.md)
+AirScript 官方 `Crypto` 只提供摘要和 HMAC，不提供 AES-CBC；官方文档也未提供加密凭据存储。Cookie、令牌或密码会以单元格原文保存，请限制文档访问权限，优先使用可撤销 Cookie 或令牌。
 
-[Bark每日定时推送消息](./docs/bark-cn.md)
+Python 会话对象、自动 Cookie jar、代理参数、关闭 TLS 校验和第三方包均没有 AirScript 等价能力。本项目改为手动 Cookie、显式 headers 和平台默认 TLS 校验，不加载第三方依赖。
 
-## 签到列表
+## 每日任务范围
 
-🟢: 已有用户验证 🟡: 已完成 AirScript 适配，待真实凭据验证 🟠: 部分适配 🔴: 未适配或已失效
+状态含义：
 
-| 状态 | 任务 | 任务标识 / 脚本 | 检查日期 | 当前范围 |
-| --- | --- | --- | --- | --- |
-| 🟡 | [有道云笔记](https://note.youdao.com/) | `YOUDAO` | 2026-07-25 | 签到、广告空间 |
-| 🟡 | [阿里云盘](https://www.aliyundrive.com/) | `ALIYUN` | 2026-07-25 | 刷新令牌、签到、领取奖励 |
-| 🟡 | [百度网盘](https://pan.baidu.com/) | `BAIDUWP` | 2026-07-25 | 会员签到、每日答题、会员信息 |
-| 🟡 | [Bilibili](https://www.bilibili.com/) | `BILIBILI` | 2026-07-25 | 登录检查、直播与漫画签到 |
-| 🟡 | [V2EX](https://www.v2ex.com/) | `V2EX` | 2026-07-25 | 每日奖励、余额查询 |
-| 🟡 | [AcFun](https://www.acfun.cn/) | `ACFUN` | 2026-07-25 | 每日签到、等级和香蕉查询 |
-| 🟡 | [恩山无线论坛](https://www.right.com.cn/forum/) | `ENSHAN` | 2026-07-25 | formhash 签到 |
-| 🟡 | [飞牛 NAS 社区](https://club.fnnas.com/) | `FNNASCLUB` | 2026-07-25 | 每日打卡 |
-| 🟡 | [百度贴吧](https://tieba.baidu.com/) | `TIEBA` | 2026-07-25 | MD5 签名、关注贴吧逐吧签到 |
-| 🟡 | [什么值得买](https://www.smzdm.com/) | `SMZDM` | 2026-07-25 | token 与 MD5 签名签到 |
-| 🟠 | [爱奇艺](https://www.iqiyi.com/) | `IQIYI` | 2026-07-25 | 账号与成长信息；未启用高频抽奖 |
-| 🟠 | [全民 K 歌](https://kg.qq.com/) | `KGQQ` | 2026-07-25 | 六类签到奖励请求；接口字段易变化 |
-| 🔴 | i 茅台 | 未适配 | 2026-07-25 | 设备、定位和申购行为不适合普通签到脚本 |
-| 🔴 | 小米运动 | 未适配 | 2026-07-25 | 涉及账号登录、数据修改和风控 |
-| 🔴 | 百度站点提交 | 未适配 | 2026-07-25 | 属于站长工具，不是个人签到 |
-| 🔴 | 奥拉星 | 未适配 | 2026-07-25 | 老旧活动接口且缺少可验证账号 |
+- 🟡 **可用（代码验证）**：已完成 AirScript 代码、配置和模拟契约检查，等待用户用自己的凭据验证第三方接口。
+- 🟠 **可用（受限）**：核心流程已适配，但含高请求量、私有接口或账号副作用；相关扩展默认关闭或受请求上限保护。
+- 🔴 **不纳入**：当前不满足 AirScript 能力、安全性或服务状态要求，并给出明确原因。
 
-以上 DailyCheckIn 任务统一使用 [`polymerization/dailycheckin.js`](./polymerization/dailycheckin.js)。原有历史脚本仍保留，但未在 2026-07-25 使用真实账号重新验证，不能沿用旧的绿色状态。
+| 状态 | 任务 | 标识 | 默认执行范围 | 可选范围 / 限制 | 代码审计日期 |
+| --- | --- | --- | --- | --- | --- |
+| 🟡 可用（代码验证） | 有道云笔记 | `YOUDAO` | 会话刷新、同步、签到、广告空间 | 最多 3 次广告任务 | 2026-07-26 |
+| 🟡 可用（代码验证） | 阿里云盘 | `ALIYUN` | 刷新令牌、签到、领取当日奖励 | 无 | 2026-07-26 |
+| 🟡 可用（代码验证） | 百度网盘 | `BAIDUWP` | 会员签到、每日答题、成长查询 | 无 | 2026-07-26 |
+| 🟠 可用（受限） | Bilibili | `BILIBILI` | 登录检查、直播和漫画签到、只读统计 | 会员权益、投币、观看、分享、银瓜子兑换默认关闭 | 2026-07-26 |
+| 🟡 可用（代码验证） | V2EX | `V2EX` | 每日奖励、余额、连续签到 | AirScript 不支持代理参数 | 2026-07-26 |
+| 🟠 可用（受限） | AcFun | `ACFUN` | 签到、等级和香蕉查询 | 登录、点赞、弹幕、投香蕉需显式配置 | 2026-07-26 |
+| 🟡 可用（代码验证） | 恩山无线论坛 | `ENSHAN` | 当前插件签到、连续天数、积分查询 | 无 | 2026-07-26 |
+| 🟡 可用（代码验证） | 飞牛 NAS 社区 | `FNNASCLUB` | 每日打卡、打卡动态 | 无 | 2026-07-26 |
+| 🟠 可用（受限） | 百度贴吧 | `TIEBA` | 分页取贴吧、MD5 签名、逐吧签到和统计 | 默认最多 3 页、20 个贴吧，可调至 5 页、50 个 | 2026-07-26 |
+| 🟠 可用（受限） | 什么值得买 | `SMZDM` | MD5 签名签到、签到奖励 | 限时活动需提供 `activity_id` | 2026-07-26 |
+| 🟠 可用（受限） | 爱奇艺 | `IQIYI` | VIP 与成长信息 | 抽奖和权益接口默认关闭 | 2026-07-26 |
+| 🟠 可用（受限） | 全民 K 歌 | `KGQQ` | 资料、6 类奖励、鲜花差值 | 抽奖、音乐卡和 VIP 奖励默认关闭并节流 | 2026-07-26 |
+| 🟡 可用（代码验证） | 百度站点提交 | `BAIDU` | 获取 URL 列表并提交 | 仅允许官方提交域名，最多 5 次尝试，源响应小于 1.8 MB | 2026-07-26 |
+| 🔴 不纳入 | 奥拉星 | `AOLAXING` | 不适配 | 公开任务接口已明确返回“服务已下线” | 2026-07-26 |
+| 🔴 不纳入 | i 茅台 | `IMAOTAI` | 不适配 | 依赖 AES-CBC/PKCS7、设备和定位参数，并执行真实申购 | 2026-07-26 |
+| 🔴 不纳入 | 小米运动 | `MIMOTION` | 不适配 | 状态不稳定，且会写入伪造运动数据，不属于正常签到 | 2026-07-26 |
 
-## 支持的通知列表
+详细字段和 JSON 示例见 [每日任务适配说明](./docs/daily-airscript-cn.md)。
 
-- Bark（iOS）
-- 邮箱推送（内置/自定义）
-- Server酱
-- pushplus
-- 邮箱
-- 钉钉
-- Discord
+## 可选配置示例
 
-## 建议  
+普通任务可直接在 B 列填写 Cookie 或令牌。需要扩展功能时填写 JSON：
 
-* 不同wps版本签到间隔30分钟  
-* 定时任务时间尽量上午九点半之后  
-* 定时任务尽量不设在同一时间  
-
-## 致开发者
-
-代码进行了模块化的开发，即使是**零开发经验、无代码基础**也能根据以下教程快速编写出所需脚本。
-文件简要解释：UPDATE.js脚本（更新脚本）能够自动创建表格、自动填充缺失内容，不会覆盖原有数据
-除此脚本外，都是自动化脚本。
-
-### 新增脚本步骤：
-
-1. 向UPDATE.js脚本中写入新脚本的表格配置数据
-   如原来表格信息是这样
-
-```javascript
-// 分配置表名称
-var subConfigWorkbook=['aliyundrive_multiuser','52pojie'];
-// CONFIG表内容
-var configContent=[
-  ['工作表的名称','备注','只推送失败消息（是/否）','推送昵称（是/否）'],
-  ['aliyundrive_multiuser','阿里云盘（多用户版）','否','否'],
-  ['52pojie','吾爱破解','否','否'],
-]
-```
-
-假设需要添加有道云笔记的脚本（英文noteyoudao）,则修改为如下。
-
-```javascript
-// 分配置表名称
-var subConfigWorkbook=['aliyundrive_multiuser','52pojie','noteyoudao'];
-// CONFIG表内容
-var configContent=[
-  ['工作表的名称','备注','只推送失败消息（是/否）','推送昵称（是/否）'],
-  ['aliyundrive_multiuser','阿里云盘（多用户版）','否','否'],
-  ['52pojie','吾爱破解','否','否'],
-  ['noteyoudao','有道云笔记','否','否'],
-]
-```
-
-此时若运行UPDATE.js脚本，则会在CONFIG表（主配置表）中看到新增了一行有道云笔记的配置，并且新增了名称为noteyoudao的表
-
-2. 新建自动化脚本，名称需要和步骤1中新增的表名称一致。如上述的noteyoudao.js。可以直接复制已有的自动化脚本，在此基础上修改。
-   例如修改52pojie脚本为新增的noteyoudao脚本
-   在脚本开头的几行会有此脚本的基础信息，将其修改
-   原脚本为：
-
-```javascript
-let sheetNameSubConfig = "52pojie"; // 分配置表名称
-let pushHeader = "【52pojie】";
-```
-
-修改后脚本为：
-
-```javascript
-let sheetNameSubConfig = "noteyoudao"; // 这里需要和步骤1中的表名称一致
-let pushHeader = "【有道云笔记】";  // 这里的内容可以随意填写，仅作为消息推送的备注
-```
-
-然后修改处于脚本最末尾的execHandle函数，根据抓包的内容（例如抓取签到的包，软件抓包也不需要代码基础，IOS端可用Stream工具、安卓端可用小黄鸟、PC端可用burp）填写如下标注的几处修改的地方即可。 原脚本大致内容会为：
-
-```javascript
-// 具体的执行函数
-function execHandle(cookie, pos) {
-  let messageSuccess = "";
-  let messageFail = "";
-  let messageName = "";
-  if (messageNickname == 1) {
-    messageName = Application.Range("C" + pos).Text;
-  } else {
-    messageName = "单元格A" + pos + "";
-  }
-  try {
-    var url1 = "https://xxxxxx.com";    // 修改处①
-    data ={                             // 修改处②，若是get请求则忽略此处
-        "键":"值",
-    }
-    headers = {                         // 修改处③
-      cookie: cookie,
-      "键":"值",
-    };
-
-    let resp = HTTP.fetch(url1, {       // 可能修改处，若为post请求则用这块代码
-      method: "post",
-      headers: headers,
-      data: data,
-    });
-
-    // let resp = HTTP.fetch(url1, {    // 可能修改处，若为get请求则用这块代码
-    //   method: "get",
-    //   headers: headers,
-    // });
-
-    if (resp.status == 200) {           // 可能修改处，按需对json格式修改。若不会修改，则可以忽略此处
-      resp = resp.json();
-      console.log(resp);
-      messageSuccess += "帐号：" + messageName + "签到成功 " ;
-      console.log("帐号：" + messageName + "签到成功 ");
-    } else {
-      console.log(resp.text());
-      messageFail += "帐号：" + messageName + "签到失败 ";
-      console.log("帐号：" + messageName + "签到失败 ");
-    }
-  } catch {
-    messageFail += messageName + "失败";
-  }
-
-  sleep(2000);
-  if (messageOnlyError == 1) {
-    message += messageFail;
-  } else {
-    message += messageFail + " " + messageSuccess;
-  }
-  console.log(message);
+```json
+{
+  "cookie": "SESSDATA=...; bili_jct=...",
+  "coin_num": 0,
+  "vip_reward": false,
+  "watch": false,
+  "share": false,
+  "silver2coin": false
 }
 ```
 
-例如修改为noteyoudao的脚本后的内容为
+百度站点提交必须使用 JSON：
 
-```javascript
-// 具体的执行函数
-function execHandle(cookie, pos) {
-  let messageSuccess = "";
-  let messageFail = "";
-  let messageName = "";
-  if (messageNickname == 1) {
-    messageName = Application.Range("C" + pos).Text;
-  } else {
-    messageName = "单元格A" + pos + "";
-  }
-  try {
-    var url1 = "https://note.youdao.com/yws/mapi/user?method=checkin";   // 修改了这里
-    headers = { // 修改了这里
-      cookie: cookie,   
-      "User-Agent": "YNote",
-      Host: "note.youdao.com",
-    };
-
-    let resp = HTTP.fetch(url1, {   // 修改了这里
-      method: "post",
-      headers: headers,
-    });
-
-    if (resp.status == 200) {   // 修改了这里
-      resp = resp.json();
-      console.log(resp);
-      total = resp["total"] / 1048576;
-      space = resp["space"] / 1048576;
-      messageSuccess += "帐号：" + messageName + "签到成功，本次获取 " + space + " M, 总共获取 " + total + " M ";
-      console.log("帐号：" + messageName + "签到成功，本次获取 " + space + " M, 总共获取 " + total + " M ");
-    } else {
-      console.log(resp.text());
-      messageFail += "帐号：" + messageName + "签到失败 ";
-      console.log("帐号：" + messageName + "签到失败 ");
-    }
-  } catch {
-    messageFail += messageName + "失败";
-  }
-
-  sleep(2000);
-  if (messageOnlyError == 1) {
-    message += messageFail;
-  } else {
-    message += messageFail + " " + messageSuccess;
-  }
-  console.log(message);
+```json
+{
+  "data_url": "https://example.com/urls.txt",
+  "submit_url": "https://data.zz.baidu.com/urls?site=https%3A%2F%2Fexample.com&token=REPLACE_ME",
+  "max_retries": 1
 }
 ```
 
-此时就成功创建新脚本了。
+## 聚合脚本
 
-## 特别声明
+`polymerization` 中的脚本共用以下工作表：
 
-- 本仓库发布的脚本仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
+- `CONFIG`：设置是否只推送失败消息、是否显示账号昵称。
+- `PUSH`：配置 Bark、pushplus、ServerChan、邮箱、钉钉或 Discord。
+- `EMAIL`：仅在开启邮件推送时使用。
+- `daily`：保存 13 项每日任务的账号配置、执行开关和 E/F 列回写结果。
 
-- 本人对任何脚本问题概不负责，包括但不限于由任何脚本错误导致的任何损失或损害。
+`UPDATE.js` 只补充缺失行列，不会主动覆盖已有单元格。运行前仍建议保留自己的文档副本。
 
-- 间接使用脚本的任何用户，包括但不限于建立VPS或在某些行为违反国家/地区法律或相关法规的情况下进行传播, 本人对于由此引起的任何隐私泄漏或其他后果概不负责。
+## 本地验证
 
-- 请勿将本仓库的任何内容用于商业或非法目的，否则后果自负。
+```bash
+node --check polymerization/daily.js
+node --check polymerization/UPDATE.js
+node tests/daily.test.js
+```
 
-- 如果任何单位或个人认为该项目的脚本可能涉嫌侵犯其权利，则应及时通知并提供身份证明，所有权证明，我们将在收到认证文件后删除相关脚本。
+测试覆盖 13 个任务的核心路径，并覆盖 Bilibili、AcFun、爱奇艺和全民 K 歌的主要可选路径。模拟测试不能代替 AirScript 编辑器实机运行或真实账号验证。
 
-- 任何以任何方式查看此项目的人或直接或间接使用该项目的任何脚本的使用者都应仔细阅读此声明。本人保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或Script项目的规则，则视为您已接受此免责声明。
+## 使用约束
 
-**您必须在下载后的24小时内从计算机或手机中完全删除以上内容**
+- 仅在你有权使用的账号和服务上运行脚本。
+- 第三方私有接口可能随时改变；以 E 列回写结果为准，不要仅依赖推送成功。
+- 投币、公开互动、抽奖、兑换等操作可能消耗账号资产或触发风控，默认关闭。
+- 不要把多个高频任务安排在同一分钟，建议错峰执行。
+- 本项目用于个人自动化研究，不保证第三方服务长期兼容。
 
-> ***您使用或者复制了本仓库且本人制作的任何脚本，则视为 `已接受` 此声明，请仔细阅读***
+## License
 
-## 代码参考
-<a href="https://github.com/HeiDaotu/WFRobertQL">WFRobertQL</a>
-<a href="https://github.com/kxs2018/daily_sign">daily_sign</a>
-<a href="https://www.52pojie.cn/thread-1811357-1-1.html">@qike2391</a>
-<a href="https://github.com/wd210010/just_for_happy">wd210010</a>
-
-## README模板来源于
-<a href="https://github.com/Sitoi/dailycheckin">dailycheckin仓库</a>
+本仓库以 [MIT](./LICENSE) 许可发布。2026 年 AirScript 迁移与维护由 [poboll](https://github.com/poboll) 完成；依法必须保留的第三方 MIT 声明见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。

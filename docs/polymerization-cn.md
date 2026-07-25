@@ -1,108 +1,61 @@
-# 聚合脚本教程
+# 聚合脚本使用说明
 
-聚合脚本**初次使用步骤**：（本文展示此步骤）
+当前每日任务使用一份 [`daily.js`](../polymerization/daily.js) 和一张 `daily` 配置表。旧的“每个任务复制一份脚本、维护一张分配置表”方式仅适用于仓库中的历史脚本，不是本次每日任务适配的推荐流程。
 
-1. 复制并运行最新的更新脚本（UPDATE.js)会自动新增最新表格及配置
-2. 复制所需的签到脚本，并添加网络API服务和加入定时任务
+## 准备工作
 
-在原有的聚合脚本中**添加新脚本步骤**：（本文不展示此步骤，仅供了解）
+1. 在金山文档中新建智能表格。
+2. 打开 **AirScript 1.0** 编辑器。
+3. 创建文档共享脚本，并添加“网络 API”服务。
+4. 只有需要邮件推送时才添加“邮件 API”。AirScript 2.0 当前尚未开放邮件 API，不能直接替代本项目的 SMTP 推送。
 
-1. 复制并运行最新的更新脚本（UPDATE.js)会自动新增最新表格及配置
-2. 复制最新的签到脚本，并添加网络API服务和加入定时任务
+## 创建配置表
 
-文章中的代码已放入github仓库中，更多及最新代码将会在仓库中更新
+先复制并运行 [`polymerization/UPDATE.js`](../polymerization/UPDATE.js)。脚本会创建或补全：
 
-```
-https://github.com/poboll
-```
+- `CONFIG`：设置是否只推送失败消息，以及是否显示账号昵称。
+- `PUSH`：配置 Bark、pushplus、ServerChan、邮箱、钉钉和 Discord。
+- `EMAIL`：仅在启用邮件推送时使用。
+- `daily`：保存每日任务标识、凭据、开关和执行结果。
 
-如果上述链接访问过慢，可访问如下github加速镜像
+`UPDATE.js` 只补充缺失行列，不会主动覆盖已有单元格。运行前仍建议保留自己的文档副本。
 
-```
-https://githubfast.com/poboll
-```
+## 配置 daily 表
 
-聚合脚本中的**表格是通过运行UPDATE脚本自动生成**的。表格介绍如下：
+| 列 | 内容 | 说明 |
+| --- | --- | --- |
+| A | 任务标识 | 例如 `ALIYUN`、`TIEBA` |
+| B | 凭据或 JSON 配置 | 简单任务直接填写 Cookie/令牌；扩展任务填写 JSON |
+| C | 是否执行 | 只有“是”会执行 |
+| D | 账号名称 | 可选，用于日志和推送 |
+| E | 最近结果 | `daily.js` 自动回写 |
+| F | 执行时间 | `daily.js` 自动回写 |
 
-**主配置表格**（CONFIG）：
+完整字段、默认开关和排除原因见 [每日任务 AirScript 适配说明](./daily-airscript-cn.md)。不要在 Issue、截图或公开聊天中提交真实凭据。
 
-对脚本进行统一管理，能配置是否为仅推送错误消息，能配置推送内容是用"昵称"还是"单元格Ax"的格式指代账户。
+获取凭据时优先使用[电脑端浏览器](./desktop-cn.md)；必须由手机 App 触发时再参考 [iOS](./ios-cn.md) 或 [Android](./android-cn.md) 抓包教程。网页版完整教程位于 [wps-docs.caiths.com/polymerization](https://wps-docs.caiths.com/polymerization)。
 
-**推送表格**（PUSH）：
+## 创建自动化脚本
 
-对推送的方式进行配置。推送识别号如pushplus填token，Server酱填key。若需要邮箱推送方式，还需要配置邮箱表（EMAIL）。
+1. 新建一份文档共享脚本，建议命名为 `daily`。
+2. 复制 [`polymerization/daily.js`](../polymerization/daily.js) 的完整内容并保存。
+3. 确认已添加“网络 API”服务。
+4. 先手动运行一次，查看 `daily` 表 E、F 列。
+5. 确认结果后再创建定时任务。
 
-**分配置表格**（如:aliyundrive_multiuser、wps等等）：
+脚本按行执行已启用任务，并在任务之间休眠。贴吧、全民 K 歌等请求量较多的任务已经设置默认上限；仍建议错峰执行，不要把多份高频脚本安排在同一分钟。
 
-是具体对应脚本的配置。如:aliyundrive_multiuser指代（阿里云盘（多用户版））、wps指代（WPS（轻量版、客户端版、稻壳版）共有的配置）。表格中的cookie填脚本所需的消息，如阿里云盘（多用户版）填的为refresh_token，wps中填wps_sid。
+## 更新方式
 
-## 实际操作
+更新时重新复制最新版 `UPDATE.js` 和 `daily.js`：
 
-1. 浏览器访问金山文档网址，并点击新建
+1. 运行 `UPDATE.js` 补齐新表格或新行。
+2. 用最新版 `daily.js` 替换自动化脚本内容。
+3. 检查新增任务默认均为“否”，按需启用。
+4. 手动运行并确认 E 列结果后，再保留定时任务。
 
-```
-https://www.kdocs.cn/latest?from=docs
-```
+早期测试版本曾使用其他聚合表名。新版只读取 `daily` 表，不会读取或删除旧表；需要保留的凭据请手动迁移。
 
-2. 点击“表格”
-3. 点击“空白表格”
+## 历史脚本
 
-![wps-1](./images/wps-1.png)
-
-![wps-2](./images/wps-2.png)
-
-如图所示创建表格。
-
-4. 依次点击“效率”-“高级开发”-“AirScript脚本编辑器”
-
-![wps-3](./images/wps-3.png)
-
-5. 依次点击“创建脚本”-“文档共享脚本”
-
-![wps-4](./images/wps-4.png)
-
-6. 进入github中复制最新的UPDATE.js代码
-
-```
-https://github.com/poboll/wps_script/tree/main/polymerization
-```
-
-![](./images/polymerization-1.png)
-
-![](./images/polymerization-2.png)
-
-![](./images/polymerization-3.png)
-
-7. 将复制的UPDATE代码粘贴到脚本编辑器中，点击"保存"，再点击运行。
-
-![](./images/polymerization-4.png)
-
-8. 当UPDATE脚本运行完后，会自动生成如下的配置表格。（UPDATE.js是更新脚本，属于一次性脚本，当生成表格配置后就已经不需要了，可以自己选择是否要删除。建议不进行删除，当清除某列及某列以下部分、某行及某行以右部分，希望恢复原来表格，则运行UPDATE.js脚本会自动补全信息）
-
-![](./images/polymerization-5.png)
-
-9. 进入github中，依次复制最新脚本代码，如aliyundrive_multiuser.js，noteyoudao.js、tieba.js等。点击"+"依次将代码粘贴到编辑器内，并点击保存。（仅需添加自己需要的脚本即可，如只需要阿里云盘脚本，则仅添加阿里云盘脚本。）
-
-![](./images/polymerization-6.png)
-
-![](./images/polymerization-7.png)
-
-![](./images/polymerization-8.png)
-
-10. 按图所示，点击“服务”-“添加服务”，再点击“网络API”对应的“添加”按钮。**每个脚本都需要添加**。若需要邮箱推送，则添加“邮箱API”。
-
-![wps-5](./images/wps-5.png)
-
-11. 根据需要写每个分配置表的内容，如aliyundrive_multiuser中第一列填的是refresh_token。主配置表（CONFIG）及推送表（PUSH）根据自身需求填写
-
-12. 可对点击“运行”进行测试。此测试步骤可忽略
-
-13. 依次点击“高级开发”-“定时任务”，将刚刚的脚本添加到定时任务中。
-
-![wps-6](./images/wps-6.png)
-
-14. 依次点击“创建任务”-“每天”，并选择刚刚的“未命名脚本”，此时就完成了，每天指定时间将会进行签到。（仅需添加希望定时执行的脚本即可。若之后不想定时执行某个任务，可删除此定时任务，或将表格配置中的是否执行改为“否”）
-
-![wps-7](./images/wps-7.png)
-
-END
+`polymerization` 目录中的其他脚本沿用各自分配置表，`single` 目录保存历史独立版本。它们没有纳入本次 2026-07-26 的逐项复核，不能套用每日任务页面中的状态结论。

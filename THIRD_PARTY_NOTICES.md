@@ -1,6 +1,15 @@
+# Third-Party Notices
+
+This file preserves notices required by the MIT licenses that apply to the
+original WPS script base and the daily task reference implementation. The
+AirScript adaptation and subsequent modifications are maintained by poboll.
+
+The following notice applies to those third-party portions:
+
 MIT License
 
-Copyright (c) 2026 poboll
+Copyright (c) 2023 在虎
+Copyright (c) 2021 Sitoi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
