@@ -214,7 +214,7 @@ function determineRowCol(){
   // 超过最大行了，认为row为0，从头开始
   let length = colNum.length
   for (let i = 1; i <= length; i++){
-    content = Application.Range(colNum[i-1] + "1").Text
+    let content = Application.Range(colNum[i-1] + "1").Text
     if(content == "")  // 如果为空行，则提前结束读取
     {
       col = i - 1;  // 记录的是存在数据所在的行
@@ -244,28 +244,15 @@ function ActivateSheet(sheetName){
 
 // 统一编辑表函数
 function editConfigSheet(content){
-  determineRowCol();
   let lengthRow = content.length
   let lengthCol = content[0].length
-  if(row == 0){ // 如果行数为0，认为是空表,开始写表头
-    for(let i = 0; i< lengthCol; i++){
-      Application.Range(colNum[i] + 1).Value = content[0][i]
-    }
-
-    row += 1; // 让行数加1，代表写入了表头。
-  }
-
-  // 从已写入的行的后一行开始逐行写入数据
-  // 先写行
-  for(let i = 1 + row; i <= lengthRow; i++){  // 从未写入区域开始写
+  for(let i = 1; i <= lengthRow; i++){
     for(let j = 0; j < lengthCol; j++){
-      Application.Range(colNum[j] + i).Value = content[i-1][j]
-    }
-  }
-  // 再写列
-  for(let j = col; j < lengthCol; j++){
-    for(let i = 1; i <= lengthRow; i++){  // 从未写入区域开始写
-      Application.Range(colNum[j] + i).Value = content[i-1][j]
+      let value = content[i-1][j]
+      let range = Application.Range(colNum[j] + i)
+      if(range.Text == "" && value != ""){
+        range.Value = value
+      }
     }
   }
 }

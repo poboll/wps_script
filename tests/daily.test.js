@@ -44,11 +44,12 @@ function response(body, status = 200, headers = {}) {
   };
 }
 
-function createRuntime(responses = []) {
+function createRuntime(responses = [], options = {}) {
   const queue = responses.slice();
   const requests = [];
-  const cells = {};
-  let activeSheet = "";
+  const cells = Object.assign({}, options.cells || {});
+  const sheets = options.sheets || ["daily"];
+  let activeSheet = options.activeSheet || "";
   const context = {
     Buffer,
     console: { log() {} },
@@ -68,7 +69,7 @@ function createRuntime(responses = []) {
     Application: {
       Sheets: {
         Item(name) {
-          if (name !== "daily") throw new Error("sheet not found");
+          if (!sheets.includes(name)) throw new Error("sheet not found");
           return { Activate() { activeSheet = name; } };
         },
       },
@@ -178,13 +179,23 @@ function runUpdate(initialState = {}) {
   return { sheets, activeSheet };
 }
 
-// 官方文档明确列出的不支持语法不得出现在 AirScript 主脚本中。
-assert.doesNotMatch(source, /\bclass\s+[A-Za-z_$]/);
-assert.doesNotMatch(source, /\b(?:import|export)\s/);
-assert.doesNotMatch(source, /\?\./);
-assert.doesNotMatch(source, /\bawait\b/);
-assert.doesNotMatch(source, /\byield\b/);
-assert.doesNotMatch(source, /\basync\s+function\b/);
+// 官方文档明确列出的不支持语法不得出现在任一 AirScript 生产脚本中。
+function assertAirScriptSyntax(fileSource, label) {
+  assert.doesNotMatch(fileSource, /\bclass\s+[A-Za-z_$]/, label + " 不得使用 class");
+  assert.doesNotMatch(fileSource, /\b(?:import|export)\s/, label + " 不得使用 import/export");
+  assert.doesNotMatch(fileSource, /\?\./, label + " 不得使用可选链");
+  assert.doesNotMatch(fileSource, /\bawait\b/, label + " 不得使用 await");
+  assert.doesNotMatch(fileSource, /\byield\b/, label + " 不得使用 yield");
+  assert.doesNotMatch(fileSource, /\basync\s+function\b/, label + " 不得使用 async function");
+  assert.doesNotMatch(
+    fileSource,
+    /(?:^|[,{]\s*)(?!(?:if|for|while|switch|catch|function|with)\b)[A-Za-z_$][\w$]*\s*\([^)]*\)\s*\{/m,
+    label + " 不得使用对象方法简写"
+  );
+}
+
+assertAirScriptSyntax(source, "daily.js");
+assertAirScriptSyntax(updateSource, "UPDATE.js");
 {
   const runtime = createRuntime();
   const expectedHandlers = [
@@ -208,19 +219,84 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
 
 {
   const first = runUpdate();
+  const headers = ["A", "B", "C", "D", "E", "F"].map((column) => first.sheets.daily[column + "1"]);
+  assert.deepEqual(headers, [
+    "任务标识", "凭据 / JSON 配置", "是否执行(是/否)",
+    "账号名称(可不填写)", "最近结果", "执行时间",
+  ]);
   const generatedTasks = expectedTasks.map((_, index) => first.sheets.daily["A" + (index + 2)]);
   assert.deepEqual(generatedTasks, expectedTasks, "UPDATE.js 应按文档顺序创建 13 项任务");
   for (let index = 0; index < expectedTasks.length; index++) {
     assert.equal(first.sheets.daily["C" + (index + 2)], "否", "新增任务必须默认关闭");
   }
 
+  first.sheets.daily.A2 = "CUSTOM";
   first.sheets.daily.B2 = "user-cookie";
   first.sheets.daily.C2 = "是";
   first.sheets.daily.D2 = "我的账号";
+  first.sheets.daily.E2 = "已有结果";
+  first.sheets.daily.F2 = "2026-07-26 08:00:00";
+  first.sheets.daily.F1 = "";
   const second = runUpdate(first);
+  assert.equal(second.sheets.daily.A2, "CUSTOM", "重复运行不得覆盖任务标识");
   assert.equal(second.sheets.daily.B2, "user-cookie", "重复运行不得覆盖凭据");
   assert.equal(second.sheets.daily.C2, "是", "重复运行不得覆盖执行开关");
   assert.equal(second.sheets.daily.D2, "我的账号", "重复运行不得覆盖账号名称");
+  assert.equal(second.sheets.daily.E2, "已有结果", "重复运行不得覆盖结果");
+  assert.equal(second.sheets.daily.F2, "2026-07-26 08:00:00", "重复运行不得覆盖时间");
+  assert.equal(second.sheets.daily.F1, "执行时间", "重复运行应补齐缺失表头");
+
+  second.sheets.daily.A5 = "";
+  second.sheets.daily.B5 = "SECRET";
+  second.sheets.daily.C5 = "是";
+  second.sheets.daily.D5 = "自定义账号";
+  second.sheets.daily.E5 = "已有结果";
+  second.sheets.daily.F5 = "2026-07-26 09:00:00";
+  const third = runUpdate(second);
+  assert.equal(third.sheets.daily.A5, "BILIBILI", "重复运行应补齐中间缺失的任务标识");
+  assert.equal(third.sheets.daily.B5, "SECRET", "补齐任务标识时不得覆盖凭据");
+  assert.equal(third.sheets.daily.C5, "是", "补齐任务标识时不得覆盖执行开关");
+  assert.equal(third.sheets.daily.D5, "自定义账号", "补齐任务标识时不得覆盖账号名称");
+  assert.equal(third.sheets.daily.E5, "已有结果", "补齐任务标识时不得覆盖结果");
+  assert.equal(third.sheets.daily.F5, "2026-07-26 09:00:00", "补齐任务标识时不得覆盖时间");
+}
+
+{
+  const runtime = createRuntime([
+    response({ access_token: "access-token" }),
+    response({ success: true, result: { signInCount: 8 } }),
+    response({ result: { name: "1 天会员" } }),
+  ], {
+    sheets: ["CONFIG", "daily"],
+    cells: {
+      "CONFIG!A2": "daily",
+      "CONFIG!C2": "否",
+      "CONFIG!D2": "是",
+      "daily!A2": "ALIYUN",
+      "daily!B2": "refresh-token",
+      "daily!C2": "是",
+      "daily!D2": "主账号",
+      "daily!A3": "V2EX",
+      "daily!B3": "A2=skip",
+      "daily!C3": "否",
+      "daily!D3": "跳过账号",
+      "daily!A4": "UNKNOWN",
+      "daily!B4": "value",
+      "daily!C4": "是",
+      "daily!D4": "错误账号",
+    },
+  });
+  assert.equal(runtime.queue.length, 0, "主流程应消费启用任务的所有响应");
+  assert.match(runtime.cells["daily!E2"], /累计签到 8 天/);
+  assert.match(runtime.cells["daily!F2"], /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+  assert.equal(runtime.cells["daily!E3"], undefined, "C 列为否时不得执行或回写");
+  assert.equal(runtime.cells["daily!F3"], undefined, "C 列为否时不得写入时间");
+  assert.match(runtime.cells["daily!E4"], /^失败：不支持的任务标识：UNKNOWN$/);
+  assert.match(runtime.cells["daily!F4"], /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+  const summary = vm.runInContext("message", runtime.context);
+  assert.match(summary, /ALIYUN \/ 主账号/);
+  assert.match(summary, /UNKNOWN \/ 错误账号/);
+  assert.doesNotMatch(summary, /跳过账号/);
 }
 
 {
@@ -234,6 +310,17 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
   ]);
   assert.match(result, /6 MB/);
   assert.match(requests[1].options.headers.Cookie, /YNOTE_SESS=updated/);
+}
+
+{
+  const config = JSON.stringify({ cookie: "YNOTE_PERS=a||user-id||b", ad_count: 0 });
+  const { result, requests } = runHandler("runYoudao", config, [
+    response("", 200, { "set-cookie": "YNOTE_SESS=updated; Path=/" }),
+    response({ rewardSpace: 1048576 }),
+    response({ space: 2097152 }),
+  ]);
+  assert.match(result, /3 MB/);
+  assert.equal(requests.length, 3, "ad_count=0 时不得请求广告空间任务");
 }
 
 {
@@ -254,6 +341,15 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
   ]);
   assert.match(result, /回答正确/);
   assert.match(result, /会员等级 4/);
+}
+
+{
+  const { result } = runHandler("runBaiduWp", "BDUSS=ok", [
+    response({ error_code: 0, points: 2 }),
+    response({}),
+    response({ current_level: 4, current_value: 120 }),
+  ]);
+  assert.match(result, /未获取到题目/);
 }
 
 {
@@ -300,14 +396,44 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
 }
 
 {
-  const daily = '<div class="cell">连续登录 9 天</div>每日登录奖励已领取';
+  const config = JSON.stringify({
+    cookie: "SESSDATA=ok; bili_jct=csrf",
+    coin_num: 1,
+    coin_type: 1,
+  });
+  const { result, requests } = runHandler("runBilibili", config, [
+    response({ data: { isLogin: true, uname: "tester", mid: 1, vipType: 0 } }),
+    response({ code: 0, data: { text: "已签到" } }),
+    response({ code: 0, msg: "success" }),
+    response({ data: { list: [] } }),
+    response({ data: { silver: 10, gold: 2 } }),
+    response({ data: { list: [{ mid: 9 }] } }),
+    response({ data: { list: { vlist: [{ aid: 11, cid: 22, title: "关注投稿" }] } } }),
+    response({ code: 0, message: "投币成功" }),
+  ]);
+  assert.match(result, /投币：1\/1/);
+  assert.ok(requests.some((item) => item.url.includes("/x/relation/followings")));
+  assert.ok(requests.some((item) => item.url.includes("/x/space/arc/search")));
+}
+
+{
+  const before = '<input onclick="location.href = \'/mission/daily/redeem?once=123\'">';
+  const after = '<div class="cell">连续登录 9 天</div>每日登录奖励已领取';
   const balance = '<a href="/member/tester" class="top">tester</a>' +
     '<td class="d"><span class="gray">每日登录奖励 10 铜币</span></td>' +
     '<td class="d" style="text-align: right;">12.34</td>';
-  const { result } = runHandler("runV2ex", "A2=ok", [response(daily), response(balance)]);
+  const config = JSON.stringify({ cookie: "A2=ok", proxy: "https://proxy.invalid" });
+  const { result, requests } = runHandler("runV2ex", config, [
+    response(before),
+    response("领取成功"),
+    response(after),
+    response(balance),
+  ]);
   assert.match(result, /tester/);
   assert.match(result, /12.34/);
   assert.match(result, /连续签到/);
+  assert.match(result, /代理参数未使用/);
+  assert.match(requests[1].url, /\/mission\/daily\/redeem\?once=123/);
 }
 
 {
@@ -350,6 +476,17 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
 }
 
 {
+  const config = JSON.stringify({ phone: "13800000000", password: "password" });
+  const { result } = runHandler("runAcfun", config, [
+    response({ result: 0 }, 200, { "set-cookie": "auth_key=key; Path=/, acPasstoken=token; Path=/" }),
+    response({ result: 0, msg: "签到成功" }),
+    response({ result: 0, info: { level: 6, banana: 20 } }),
+  ]);
+  assert.match(result, /签到成功/);
+  assert.match(result, /等级 6/);
+}
+
+{
   const page = '<input name="formhash" value="abc123">';
   const credits = '<em>恩山币: </em>88&nbsp;<em>积分: </em>99<span>';
   const { result, requests } = runHandler("runEnshan", "sid=ok", [
@@ -362,25 +499,41 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
 }
 
 {
-  const page = '<a href="plugin.php?id=zqlj_sign&sign=abcdef" class="btna">今日已打卡</a>' +
+  const before = '<a href="plugin.php?id=zqlj_sign&sign=abcdef" class="btna">立即打卡</a>';
+  const after = '<a href="plugin.php?id=zqlj_sign&sign=abcdef" class="btna">今日已打卡</a>' +
     '<strong>我的打卡动态</strong><div class="bm_c"><li>连续打卡：7 天</li></div>';
-  const { result } = runHandler("runFnnasClub", "sid=ok", [response(page)]);
-  assert.match(result, /今日已打卡/);
+  const { result, requests } = runHandler("runFnnasClub", "sid=ok", [
+    response(before),
+    response("打卡成功"),
+    response(after),
+  ]);
+  assert.match(result, /打卡成功/);
   assert.match(result, /连续打卡/);
+  assert.match(requests[1].url, /sign=abcdef/);
 }
 
 {
-  const { result, requests } = runHandler("runTieba", "BDUSS=ok", [
+  const config = JSON.stringify({ cookie: "BDUSS=ok", max_pages: 2, max_forums: 3 });
+  const { result, requests } = runHandler("runTieba", config, [
     response({ is_login: 1, tbs: "tbs" }),
     response({ userName: "tester" }),
     response({
-      forum_list: { "non-gconforum": [{ id: "1", name: "测试" }] },
+      forum_list: { "non-gconforum": [{ id: "1", name: "测试一" }, { id: "2", name: "测试二" }] },
+      has_more: "1",
+    }),
+    response({
+      forum_list: { "gconforum": [{ id: "3", name: "测试三" }, { id: "4", name: "测试四" }] },
       has_more: "0",
     }),
+    response({ error_code: "0" }),
+    response({ error_code: "160002", error_msg: "已签到" }),
     response({ error_code: "340006", error_msg: "屏蔽" }),
   ]);
+  assert.match(result, /共发现 4 个贴吧，受运行保护限制本次处理 3 个/);
+  assert.match(result, /成功 1，已签 1，屏蔽 1，失败 0/);
   assert.match(result, /屏蔽 1/);
   assert.match(requests[2].options.body, /sign=[A-F0-9]{32}/);
+  assert.match(requests[3].options.body, /page_no=2/);
 }
 
 {
@@ -391,6 +544,19 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
   ]);
   assert.match(result, /10 积分/);
   assert.match(result, /连续 5 天/);
+}
+
+{
+  const config = JSON.stringify({ cookie: "sess=ok", activity_id: "activity-1" });
+  const { result } = runHandler("runSmzdm", config, [
+    response({ data: { token: "robot-token" } }),
+    response({ error_code: 0, error_msg: "签到成功" }),
+    response({ data: { normal_reward: null } }),
+    response({ error_msg: "抽奖完成" }),
+    response('<a href="https://zhiyou.smzdm.com/user">tester</a><img src="/level/8.png">'),
+  ]);
+  assert.match(result, /活动抽奖：抽奖完成/);
+  assert.match(result, /用户 tester，等级 8/);
 }
 
 {
@@ -482,12 +648,13 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
     ...lotteries,
     musicList,
     response({ code: 0, data: { ok: true } }),
-    response({ code: 0, data: { "vip.get_vip_info": { stVipCoreInfo: { uStatus: 0 } } } }),
+    response({ code: 0, data: { "vip.get_vip_info": { stVipCoreInfo: { uStatus: 1 } } } }),
+    response({ code: 0, data: { "vip.get_vip_day_reward": { strTips: "VIP 奖励已领取" } } }),
     profile(25),
   ]);
   assert.match(result, /抽奖 4\/4/);
   assert.match(result, /音乐卡 1\/1/);
-  assert.match(result, /非 VIP/);
+  assert.match(result, /VIP 奖励已领取/);
 }
 
 {
@@ -498,10 +665,13 @@ assert.doesNotMatch(source, /\basync\s+function\b/);
   });
   const { result, requests } = runHandler("runBaiduSubmit", config, [
     response("https://example.com/a\n"),
+    response({ success: 0, remain: 100, message: "稍后重试" }),
     response({ success: 1, remain: 99 }),
   ]);
   assert.match(result, /提交成功 1 条/);
+  assert.match(result, /请求 2 次/);
   assert.equal(requests[1].options.body, "https://example.com/a\n");
+  assert.equal(requests[2].options.body, "https://example.com/a\n");
 }
 
 {

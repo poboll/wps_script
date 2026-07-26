@@ -182,8 +182,9 @@ node tests/daily.test.js
 - Bilibili、AcFun、爱奇艺、全民 K 歌的主要可选路径覆盖。
 - HTTP options 只允许 `method`、`timeout`、`headers`、`body`。
 - 同一 Response 正文如果被读取两次，测试立即失败。
-- 主脚本不包含官方明确禁止的 JavaScript 语法。
-- `UPDATE.js` 可实际创建包含 13 项任务的 `daily` 表，重复运行不会覆盖已填写的凭据和开关。
+- `daily.js` 和 `UPDATE.js` 均不包含官方明确禁止的 JavaScript 语法。
+- `UPDATE.js` 可实际创建包含 13 项任务的 `daily` 表，重复运行不会覆盖 A-F 列已有内容。
+- 主流程覆盖 A/B/C/D 列读取、C 列关闭跳过、E/F 列成功与失败回写，以及昵称汇总消息。
 
 尚未验证：
 

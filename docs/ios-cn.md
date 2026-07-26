@@ -6,7 +6,7 @@
 
 ## 准备
 
-1. 从 App Store 安装 [Stream](https://apps.apple.com/app/id1312141691)，可用性可能因账号地区变化。
+1. 从中国区 App Store 安装 [Stream](https://apps.apple.com/cn/app/stream/id1312141691)。其他地区账号可在 App Store 搜索 `Stream`，可用性以当前商店为准。
 2. 先在目标 App 中登录，并从[每日任务说明](./daily-airscript-cn.md)确认所需域名和字段。
 3. 抓包期间不要打开支付、银行或密码管理器等无关 App。
 
